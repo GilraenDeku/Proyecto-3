@@ -6,6 +6,9 @@ import BusquedaCliente from './BusquedaCliente';
 import VistaArticulos from './VistaArticulos';
 import BusquedaArticulo from './BusquedaArticulo';
 import BusquedaClientexProducto from './BusquedaClientexProducto';
+import SelectAdmin from './SelectAdmin';
+import PantallaPrincipal from './PantallaPrincipal';
+import RegistarRegalia from './RegistrarRegalia';
 
 import {
   BrowserRouter as Router,
@@ -38,8 +41,14 @@ function App() {
         <Route path="/BusquedaClientexProducto">
           <BusquedaClientexProducto />
         </Route>
+        <Route path="/SelectAdmin">
+          <SelectAdmin />
+        </Route>
+        <Route path="/RegistarRegalia">
+          <RegistarRegalia />
+        </Route>
         <Route path="/">
-          <Test />
+          <PantallaPrincipal />
         </Route>
       </Switch>
     </Router>

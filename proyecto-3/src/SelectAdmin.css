@@ -1,0 +1,15 @@
+.SelectAdmin {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.SoloParaCard {
+    text-align: justify;
+}
+
+.ParaCardHeader {
+    font-size: 24px;
+}
