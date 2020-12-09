@@ -19,14 +19,14 @@ import Form from 'react-bootstrap/Form'
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import "./RegistrarArticulo.css";
+import "./TestRegistroArticulo.css";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationfactory from 'react-bootstrap-table2-paginator';
 
-class RegistrarArticulo extends Component {
+class TestRegistroArticulo extends Component {
 
     constructor(props) {
-        console.log("Entra a RegistrarArticulo");
+        console.log("Entra a TestRegistroArticulo");
         super(props)
         this.state = {
 
@@ -410,7 +410,7 @@ class RegistrarArticulo extends Component {
 
         return (
 
-            <div className='RegistrarArticulo'>
+            <div className='TestRegistroArticulo'>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
 
                     <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
@@ -638,4 +638,4 @@ class RegistrarArticulo extends Component {
         )
     }
 }
-export default RegistrarArticulo
+export default TestRegistroArticulo

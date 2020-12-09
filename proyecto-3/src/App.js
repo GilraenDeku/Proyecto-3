@@ -9,6 +9,8 @@ import BusquedaClientexProducto from './BusquedaClientexProducto';
 import SelectAdmin from './SelectAdmin';
 import PantallaPrincipal from './PantallaPrincipal';
 import RegistarRegalia from './RegistrarRegalia';
+import TestImage from './TestImage';
+//import TestRegistroArticulo from './TestRegistroArticulo';
 
 import {
   BrowserRouter as Router,
@@ -46,6 +48,9 @@ function App() {
         </Route>
         <Route path="/RegistarRegalia">
           <RegistarRegalia />
+        </Route>
+        <Route path="/TestImage">
+          <TestImage />
         </Route>
         <Route path="/">
           <PantallaPrincipal />

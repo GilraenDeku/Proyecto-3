@@ -1,0 +1,76 @@
+
+Un nuevo producto
+
+POST
+
+http://localhost:5000/insert_product
+
+{"name": "Tenis Predator", "brand": "Adidas", "price": 40000, "sports": ["Futbol", "Basketball", "Gimnasia"], "limit": false, "units": 20, 
+  "img": "data:image/jpeg;base64,/9j/4AAQSkZJ...", 
+  "type": "Vestimenta"}
+
+
+//////////////////////////////////////////////////////
+
+http://localhost:5000/add_offer?product_name=Tenis Predator
+
+PUT
+
+
+{"name": "Chunche", "description": "Foto con El Chunche", "info": {"type": "Descuento", "condition": 0.15}, 
+  "start": "20220315", "end": "20220316"}
+
+
+condición de la oferta 
+
+{"name": "Chunche", "description": "Foto con El Chunche", "info": {"type": "Regalia", "condition": "Esto es una prueba"}, 
+  "start": "20220315", "end": "20220316"}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+CONSULTA 1
+
+POST
+
+http://localhost:5000/client_history
+
+{"query": "NAME", "name": "Jose Montoya Salazar"}
+
+los nombres si los va a escribir
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+CONSULTA 2
+
+GET
+
+http://localhost:5000/count_sales
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+CONSULTA 3
+
+http://localhost:5000/find_product?product_name=Tenis Predator
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+CONSULTA 4
+
+http://localhost:5000/common_purchase?username=Joseda8
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Compras
+
+si el inventario no alcanza da error
+
+
+
+
+
+
+
