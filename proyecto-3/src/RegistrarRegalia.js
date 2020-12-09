@@ -30,43 +30,30 @@ class RegistrarRegalia extends Component {
         super(props)
         this.state = {
 
-            nombreArticulo: '',
+            nombreRegalia: '',
+            nombreProducto: '',
+            descripcion: '',
+            descripcionRegalia: '',
 
-            itemsBrand: [],
-            BrandListDrop: [
-            ],
-            brandSelect: '',
+            fechaInitJson: '',
+            fechaInitDia: '',
+            fechaInitMes: '',
+            fechaInitAño: '',
 
-            precioArticulo: 0,
-
-            unidadDisponibleArticulo: 0,
-
-            itemsSport: [],
-            SportListDrop: [],
-            sportSelect: '',
-            listaDeportesSeleccionados: [],
-            listaTempDeportes: [],
-
-            itemsProduct_Type: [],
-            Product_TypeListDrop: [],
-            product_TypeSelect: '',
-
-            limitadaFlag: "false",
-            estandarFlag: "false",
-            limitArticulo: false,
-
-            profileImg: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
-            imageFlag: false,
+            fechaFinalJson: '',
+            fechaFinalDia: '',
+            fechaFinalMes: '',
+            fechaFinalAño: '',
 
             jsonFile: {
                 name: '',
-                brand: '',
-                price: 0,
-                sports: [],
-                limit: false,
-                units: 0,
-                img: null,
-                type: ''
+                description: '',
+                info: {
+                    type: 'Regalia',
+                    condition: '',
+                },
+                start: '',
+                end: ''
             },
 
             listaDia: [
@@ -84,19 +71,299 @@ class RegistrarRegalia extends Component {
 
     }
 
+    clickNombreRegalia = (e) => {
+        this.setState({
+            nombreRegalia: e.target.value
+        })
+    }
+
+    clickNombreProducto = (e) => {
+        this.setState({
+            nombreProducto: e.target.value
+        })
+    }
+
+    clickNombreDescripcion = (e) => {
+        this.setState({
+            descripcion: e.target.value
+        })
+    }
+
+    clickDescripcionRegalia = (e) => {
+        this.setState({
+            descripcionRegalia: e.target.value
+        })
+    }
+
+    clickDiaFechaInit = (e) => {
+        this.setState({
+            fechaInitDia: e
+        })
+    }
+
+    clickMesFechaInit = (e) => {
+        this.setState({
+            fechaInitMes: e
+        })
+    }
+
+    clickAñoFechaInit = (e) => {
+        this.setState({
+            fechaInitAño: e.target.value
+        })
+    }
+
+    clickDiaFechaFinal = (e) => {
+        this.setState({
+            fechaFinalDia: e
+        })
+    }
+
+    clickMesFechaFinal = (e) => {
+        this.setState({
+            fechaFinalMes: e
+        })
+    }
+
+    clickAñoFechaFinal = (e) => {
+        this.setState({
+            fechaFinalAño: e.target.value
+        })
+    }
+
+    crearFechaInitJson = () => {
+        var tem = '';
+        var temMes = '';
+        if (this.state.fechaInitMes === "Enero") {
+            temMes = '01';
+        } else {
+            if (this.state.fechaInitMes === "Febrero") {
+                temMes = '02';
+            } else {
+                if (this.state.fechaInitMes === "Marzo") {
+                    temMes = '03';
+                } else {
+                    if (this.state.fechaInitMes === "Abril") {
+                        temMes = '04';
+                    } else {
+                        if (this.state.fechaInitMes === "Mayo") {
+                            temMes = '05';
+                        } else {
+                            if (this.state.fechaInitMes === "Junio") {
+                                temMes = '06';
+                            } else {
+                                if (this.state.fechaInitMes === "Julio") {
+                                    temMes = '07';
+                                } else {
+                                    if (this.state.fechaInitMes === "Agosto") {
+                                        temMes = '08';
+                                    } else {
+                                        if (this.state.fechaInitMes === "Septiembre") {
+                                            temMes = '09';
+                                        } else {
+                                            if (this.state.fechaInitMes === "Octubre") {
+                                                temMes = '10';
+                                            } else {
+                                                if (this.state.fechaInitMes === "Noviembre") {
+                                                    temMes = '11';
+                                                } else {
+                                                    if (this.state.fechaInitMes === "Diciembre") {
+                                                        temMes = '12';
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.setState({
+            fechaInitJson: this.state.fechaInitAño + temMes + this.state.fechaInitDia
+        })
+    }
+
+    crearFechaFinalJson = () => {
+        var tem = '';
+        var temMes = '';
+        if (this.state.fechaFinalMes === "Enero") {
+            temMes = '01';
+        } else {
+            if (this.state.fechaFinalMes === "Febrero") {
+                temMes = '02';
+            } else {
+                if (this.state.fechaFinalMes === "Marzo") {
+                    temMes = '03';
+                } else {
+                    if (this.state.fechaFinalMes === "Abril") {
+                        temMes = '04';
+                    } else {
+                        if (this.state.fechaFinalMes === "Mayo") {
+                            temMes = '05';
+                        } else {
+                            if (this.state.fechaFinalMes === "Junio") {
+                                temMes = '06';
+                            } else {
+                                if (this.state.fechaFinalMes === "Julio") {
+                                    temMes = '07';
+                                } else {
+                                    if (this.state.fechaFinalMes === "Agosto") {
+                                        temMes = '08';
+                                    } else {
+                                        if (this.state.fechaFinalMes === "Septiembre") {
+                                            temMes = '09';
+                                        } else {
+                                            if (this.state.fechaFinalMes === "Octubre") {
+                                                temMes = '10';
+                                            } else {
+                                                if (this.state.fechaFinalMes === "Noviembre") {
+                                                    temMes = '11';
+                                                } else {
+                                                    if (this.state.fechaFinalMes === "Diciembre") {
+                                                        temMes = '12';
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        tem = this.state.fechaFinalAño + temMes + this.state.fechaFinalDia;
+        this.setState({
+            fechaFinalJson: tem
+        })
+    }
+
 
     createJsonFile = () => {
-        this.state.jsonFile.name = this.state.nombreArticulo;
-        this.state.jsonFile.brand = this.state.brandSelect;
-        this.state.jsonFile.price = this.state.precioArticulo;
-        this.state.jsonFile.sports = this.state.listaTempDeportes;
-        this.state.jsonFile.limit = this.state.limitArticulo;
-        this.state.jsonFile.units = this.state.unidadDisponibleArticulo;
-        this.state.jsonFile.img = this.state.profileImg;
-        this.state.jsonFile.type = this.state.product_TypeSelect;
+        this.state.jsonFile.name = this.state.nombreRegalia;
+        this.state.jsonFile.description = this.state.descripcion;
+        this.state.jsonFile.info.condition = this.state.descripcionRegalia;
+        this.state.jsonFile.start = this.state.fechaInitJson;
+        this.state.jsonFile.end = this.state.fechaFinalJson;
 
         console.log("El JsonFile");
         console.log(this.state.jsonFile);
+        console.log();
+    }
+
+    clickRegistrarRegalia = () => {
+        this.crearFechaInitJson();
+        this.crearFechaFinalJson();
+        if (this.state.fechaInitJson === "") {
+            if (this.state.fechaFinalJson === "") {
+                if (this.state.nombreRegalia === "") {
+                    Swal.fire(
+                        'Error',
+                        'Por favor indique el nombre de la regalía',
+                        'error'
+                    );
+                } else {
+                    if (this.state.descripcion === '') {
+                        Swal.fire(
+                            'Error',
+                            'Por favor indique la descripcion de la promoción',
+                            'error'
+                        );
+                    } else {
+                        if (this.state.descripcionRegalia === '') {
+                            Swal.fire(
+                                'Error',
+                                'Por favor indique la descripcion de la regalía',
+                                'error'
+                            );
+                        } else {
+                            if (this.state.nombreProducto === '') {
+                                Swal.fire(
+                                    'Error',
+                                    'Por favor indique el nombre del producto que se le va a asignar la regalía',
+                                    'error'
+                                );
+                            } else {
+
+                                const swalWithBootstrapButtons = Swal.mixin({
+                                    customClass: {
+                                        confirmButton: 'btn btn-success',
+                                        cancelButton: 'btn btn-danger'
+                                    },
+                                    buttonsStyling: false
+                                })
+
+                                swalWithBootstrapButtons.fire({
+                                    title: 'Confirmar registro',
+                                    text: "Desea registrar esta promoción?",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Si, deseo registrar',
+                                    cancelButtonText: 'No',
+                                    reverseButtons: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        this.crearConsultaFinal();
+                                        swalWithBootstrapButtons.fire(
+                                            'Registro Exitoso',
+                                            'El registro se realizó de manera exitosa',
+                                            'success'
+                                        )
+                                    } else if (
+                                        /* Read more about handling dismissals below */
+                                        result.dismiss === Swal.DismissReason.cancel
+                                    ) {
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Confirmar registro',
+                text: "Desea registrar esta promoción?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, deseo registrar',
+                cancelButtonText: 'No',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    this.crearConsultaFinal();
+                  swalWithBootstrapButtons.fire(
+                    'Registro Exitoso',
+                    'El registro se realizó de manera exitosa',
+                    'success'
+                  )
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                }
+              })
+        }
+    }
+
+    crearConsultaFinal = () => {
+        this.crearFechaInitJson();
+        this.crearFechaFinalJson();
+        this.createJsonFile();
     }
 
     render() {
@@ -150,6 +417,7 @@ class RegistrarRegalia extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
+                                                            onSelect={this.clickNombreRegalia}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -165,6 +433,7 @@ class RegistrarRegalia extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
+                                                            onSelect={this.clickNombreProducto}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -180,7 +449,7 @@ class RegistrarRegalia extends Component {
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <Form.Control as="textarea" rows={3} />
+                                                        <Form.Control as="textarea" rows={3} onSelect={this.clickNombreDescripcion}/>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -195,7 +464,7 @@ class RegistrarRegalia extends Component {
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <Form.Control as="textarea" rows={3} />
+                                                        <Form.Control as="textarea" rows={3} onSelect={this.clickDescripcionRegalia}/>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -227,11 +496,13 @@ class RegistrarRegalia extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Día"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickDiaFechaInit}
                                                                 >
                                                                     {this.state.listaDia.map((dia) => (
                                                                         <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                    <p>{this.state.fechaInitDia}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Día*/}
@@ -247,11 +518,13 @@ class RegistrarRegalia extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Mes"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickMesFechaInit}
                                                                 >
                                                                     {this.state.listaMes.map((mes) => (
                                                                         <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                    <p>{this.state.fechaInitMes}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -263,7 +536,7 @@ class RegistrarRegalia extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Input placeholder="Año" type="number" />
+                                                                <Input placeholder="Año" type="number" onChange={this.clickAñoFechaInit}/>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -288,11 +561,13 @@ class RegistrarRegalia extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Día"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickDiaFechaFinal}
                                                                 >
                                                                     {this.state.listaDia.map((dia) => (
                                                                         <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                    <p>{this.state.fechaFinalDia}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Día*/}
@@ -308,11 +583,13 @@ class RegistrarRegalia extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Mes"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickMesFechaFinal}
                                                                 >
                                                                     {this.state.listaMes.map((mes) => (
                                                                         <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                    <p>{this.state.fechaFinalMes}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -324,7 +601,7 @@ class RegistrarRegalia extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Input placeholder="Año" type="number" />
+                                                                <Input placeholder="Año" type="number" onChange={this.clickAñoFechaFinal}/>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -337,6 +614,7 @@ class RegistrarRegalia extends Component {
                                             <Button
                                                             className="btn-round"
                                                             color="primary"
+                                                            onClick={this.clickRegistrarRegalia}
                                                         >
                                                             Registrar Regalía
                                                         </Button>

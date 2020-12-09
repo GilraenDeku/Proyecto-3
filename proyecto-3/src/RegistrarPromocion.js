@@ -30,49 +30,44 @@ class RegistrarPromocion extends Component {
         super(props)
         this.state = {
 
-            nombreArticulo: '',
+            nombrePromocion: '',
 
-            itemsBrand: [],
-            BrandListDrop: [
-            ],
-            brandSelect: '',
+            porcentajePromocion: 0,
 
-            precioArticulo: 0,
+            porcentajePromocionJson: 0,
 
-            unidadDisponibleArticulo: 0,
+            nombreProducto: '',
 
-            itemsSport: [],
-            SportListDrop: [],
-            sportSelect: '',
-            listaDeportesSeleccionados: [],
-            listaTempDeportes: [],
+            descripcionPromocion: '',
 
-            itemsProduct_Type: [],
-            Product_TypeListDrop: [],
-            product_TypeSelect: '',
+            fechaInitJson: '',
+            fechaInitDia: '',
+            fechaInitMes: '',
+            fechaInitAño: '',
 
-            limitadaFlag: "false",
-            estandarFlag: "false",
-            limitArticulo: false,
+            fechaFinalJson: '',
+            fechaFinalDia: '',
+            fechaFinalMes: '',
+            fechaFinalAño: '',
 
-            profileImg: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
-            imageFlag: false,
+            firstTime: true,
 
             jsonFile: {
                 name: '',
-                brand: '',
-                price: 0,
-                sports: [],
-                limit: false,
-                units: 0,
-                img: null,
-                type: ''
+                description: '',
+                info: {
+                    type: 'Descuento',
+                    condition: '',
+                },
+                start: '',
+                end: ''
             },
 
             listaDia: [
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+                '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+                '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+                '31'
             ],
 
             listaMes: [
@@ -84,19 +79,269 @@ class RegistrarPromocion extends Component {
 
     }
 
+    clickNombre = (e) => {
+        this.setState({
+            nombrePromocion: e.target.value
+        })
+    }
+
+    clickPorcentajePromocion = (e) => {
+        this.setState({
+            porcentajePromocion: Number(e.target.value)
+        })
+    }
+
+    clickNombreProducto = (e) => {
+        this.setState({
+            nombreProducto: e.target.value
+        })
+    }
+
+    clickDescripcion = (e) => {
+        this.setState({
+            descripcionPromocion: e.target.value
+        })
+    }
+
+    clickDiaFechaInit = (e) => {
+        this.setState({
+            fechaInitDia: e
+        })
+    }
+
+    clickMesFechaInit = (e) => {
+        this.setState({
+            fechaInitMes: e
+        })
+    }
+
+    clickAñoFechaInit = (e) => {
+        this.setState({
+            fechaInitAño: e.target.value
+        })
+    }
+
+    clickDiaFechaFinal = (e) => {
+        this.setState({
+            fechaFinalDia: e
+        })
+    }
+
+    clickMesFechaFinal = (e) => {
+        this.setState({
+            fechaFinalMes: e
+        })
+    }
+
+    clickAñoFechaFinal = (e) => {
+        this.setState({
+            fechaFinalAño: e.target.value
+        })
+    }
+
+    crearFechaInitJson = () => {
+        var tem = '';
+        var temMes = '';
+        if (this.state.fechaInitMes === "Enero") {
+            temMes = '01';
+        } else {
+            if (this.state.fechaInitMes === "Febrero") {
+                temMes = '02';
+            } else {
+                if (this.state.fechaInitMes === "Marzo") {
+                    temMes = '03';
+                } else {
+                    if (this.state.fechaInitMes === "Abril") {
+                        temMes = '04';
+                    } else {
+                        if (this.state.fechaInitMes === "Mayo") {
+                            temMes = '05';
+                        } else {
+                            if (this.state.fechaInitMes === "Junio") {
+                                temMes = '06';
+                            } else {
+                                if (this.state.fechaInitMes === "Julio") {
+                                    temMes = '07';
+                                } else {
+                                    if (this.state.fechaInitMes === "Agosto") {
+                                        temMes = '08';
+                                    } else {
+                                        if (this.state.fechaInitMes === "Septiembre") {
+                                            temMes = '09';
+                                        } else {
+                                            if (this.state.fechaInitMes === "Octubre") {
+                                                temMes = '10';
+                                            } else {
+                                                if (this.state.fechaInitMes === "Noviembre") {
+                                                    temMes = '11';
+                                                } else {
+                                                    if (this.state.fechaInitMes === "Diciembre") {
+                                                        temMes = '12';
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.setState({
+            fechaInitJson: this.state.fechaInitAño + temMes + this.state.fechaInitDia
+        })
+    }
+
+    crearFechaFinalJson = () => {
+        var tem = '';
+        var temMes = '';
+        if (this.state.fechaFinalMes === "Enero") {
+            temMes = '01';
+        } else {
+            if (this.state.fechaFinalMes === "Febrero") {
+                temMes = '02';
+            } else {
+                if (this.state.fechaFinalMes === "Marzo") {
+                    temMes = '03';
+                } else {
+                    if (this.state.fechaFinalMes === "Abril") {
+                        temMes = '04';
+                    } else {
+                        if (this.state.fechaFinalMes === "Mayo") {
+                            temMes = '05';
+                        } else {
+                            if (this.state.fechaFinalMes === "Junio") {
+                                temMes = '06';
+                            } else {
+                                if (this.state.fechaFinalMes === "Julio") {
+                                    temMes = '07';
+                                } else {
+                                    if (this.state.fechaFinalMes === "Agosto") {
+                                        temMes = '08';
+                                    } else {
+                                        if (this.state.fechaFinalMes === "Septiembre") {
+                                            temMes = '09';
+                                        } else {
+                                            if (this.state.fechaFinalMes === "Octubre") {
+                                                temMes = '10';
+                                            } else {
+                                                if (this.state.fechaFinalMes === "Noviembre") {
+                                                    temMes = '11';
+                                                } else {
+                                                    if (this.state.fechaFinalMes === "Diciembre") {
+                                                        temMes = '12';
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        tem = this.state.fechaFinalAño + temMes + this.state.fechaFinalDia;
+        this.setState({
+            fechaFinalJson: tem
+        })
+    }
+
 
     createJsonFile = () => {
-        this.state.jsonFile.name = this.state.nombreArticulo;
-        this.state.jsonFile.brand = this.state.brandSelect;
-        this.state.jsonFile.price = this.state.precioArticulo;
-        this.state.jsonFile.sports = this.state.listaTempDeportes;
-        this.state.jsonFile.limit = this.state.limitArticulo;
-        this.state.jsonFile.units = this.state.unidadDisponibleArticulo;
-        this.state.jsonFile.img = this.state.profileImg;
-        this.state.jsonFile.type = this.state.product_TypeSelect;
+        var temp = this.state.porcentajePromocion / 100;
+        this.state.jsonFile.name = this.state.nombrePromocion;
+        this.state.jsonFile.description = this.state.descripcionPromocion;
+        this.state.jsonFile.info.condition = temp;
+        this.state.jsonFile.start = this.state.fechaInitJson;
+        this.state.jsonFile.end = this.state.fechaFinalJson;
 
         console.log("El JsonFile");
         console.log(this.state.jsonFile);
+        console.log();
+    }
+
+    clickRegistrarPromocion = () => {
+        this.crearFechaInitJson();
+        this.crearFechaFinalJson();
+        if (this.state.fechaInitJson === "") {
+            if (this.state.fechaFinalJson === "") {
+                if (this.state.nombrePromocion === "") {
+                    Swal.fire(
+                        'Error',
+                        'Por favor indique el nombre de la promoción',
+                        'error'
+                    );
+                } else {
+                    if (this.state.porcentajePromocion === 0) {
+                        Swal.fire(
+                            'Error',
+                            'Por favor indique el porcentaje de la promoción',
+                            'error'
+                        );
+                    } else {
+                        if (this.state.descripcionPromocion === '') {
+                            Swal.fire(
+                                'Error',
+                                'Por favor indique la descripción de la promocion',
+                                'error'
+                            );
+                        } else {
+                            if (this.state.nombreProducto === '') {
+                                Swal.fire(
+                                    'Error',
+                                    'Por favor indique el nombre del producto que se le va a asignar la promoción',
+                                    'error'
+                                );
+                            } else {
+
+                                const swalWithBootstrapButtons = Swal.mixin({
+                                    customClass: {
+                                        confirmButton: 'btn btn-success',
+                                        cancelButton: 'btn btn-danger'
+                                    },
+                                    buttonsStyling: false
+                                })
+
+                                swalWithBootstrapButtons.fire({
+                                    title: 'Confirmar registro',
+                                    text: "Desea registrar esta promoción?",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Si, deseo registrar',
+                                    cancelButtonText: 'No',
+                                    reverseButtons: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        this.crearConsultaFinal();
+                                        swalWithBootstrapButtons.fire(
+                                            'Registro Exitoso',
+                                            'El registro se realizó de manera exitosa',
+                                            'success'
+                                        )
+                                    } else if (
+                                        /* Read more about handling dismissals below */
+                                        result.dismiss === Swal.DismissReason.cancel
+                                    ) {
+                                    }
+                                })
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    crearConsultaFinal = () => {
+        this.crearFechaInitJson();
+        this.crearFechaFinalJson();
+        this.createJsonFile();
     }
 
     render() {
@@ -150,6 +395,7 @@ class RegistrarPromocion extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
+                                                            onSelect={this.clickNombre}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -162,7 +408,7 @@ class RegistrarPromocion extends Component {
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <Input placeholder="Porcentaje" type="number" />
+                                                        <Input placeholder="Porcentaje" type="number" onChange={this.clickPorcentajePromocion} />
                                                     </Col>
                                                 </Row>
                                             </Col>{/*Segunda Columna*/}
@@ -177,6 +423,7 @@ class RegistrarPromocion extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
+                                                            onSelect={this.clickNombreProducto}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -192,7 +439,7 @@ class RegistrarPromocion extends Component {
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <Form.Control as="textarea" rows={3} />
+                                                        <Form.Control as="textarea" rows={3} onSelect={this.clickDescripcion} />
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -224,11 +471,13 @@ class RegistrarPromocion extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Día"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickDiaFechaInit}
                                                                 >
                                                                     {this.state.listaDia.map((dia) => (
                                                                         <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                <p>{this.state.fechaInitDia}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Día*/}
@@ -244,11 +493,13 @@ class RegistrarPromocion extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Mes"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickMesFechaInit}
                                                                 >
                                                                     {this.state.listaMes.map((mes) => (
                                                                         <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                <p>{this.state.fechaInitMes}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -260,7 +511,7 @@ class RegistrarPromocion extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Input placeholder="Año" type="number" />
+                                                                <Input placeholder="Año" type="number" onChange={this.clickAñoFechaInit} />
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -285,11 +536,13 @@ class RegistrarPromocion extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Día"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickDiaFechaFinal}
                                                                 >
                                                                     {this.state.listaDia.map((dia) => (
                                                                         <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                <p>{this.state.fechaFinalDia}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Día*/}
@@ -305,11 +558,13 @@ class RegistrarPromocion extends Component {
                                                                     as={ButtonGroup}
                                                                     title={"Mes"}
                                                                     className='scrollDelDrop'
+                                                                    onSelect={this.clickMesFechaFinal}
                                                                 >
                                                                     {this.state.listaMes.map((mes) => (
                                                                         <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
                                                                     ))}
                                                                 </DropdownButton>
+                                                                <p>{this.state.fechaFinalMes}</p>
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -321,7 +576,7 @@ class RegistrarPromocion extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Input placeholder="Año" type="number" />
+                                                                <Input placeholder="Año" type="number" onChange={this.clickAñoFechaFinal} />
                                                             </Col>
                                                         </Row>
                                                     </Col>{/*Mes*/}
@@ -331,11 +586,12 @@ class RegistrarPromocion extends Component {
                                         <br />
                                         <Row>{/*Quinta Fila*/}
                                             <Col>
-                                            <Button
-                                                            className="btn-round"
-                                                            color="primary"
-                                                        >
-                                                            Registrar Promoción
+                                                <Button
+                                                    className="btn-round"
+                                                    color="primary"
+                                                    onClick={this.clickRegistrarPromocion}
+                                                >
+                                                    Registrar Promoción
                                                         </Button>
                                             </Col>
                                         </Row>{/*Quinta Fila*/}

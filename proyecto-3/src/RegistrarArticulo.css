@@ -1,6 +1,7 @@
 .scrollDelDrop {
-    height: 60px;
+    height: 70px;
     overflow-y: scroll;
+    width:200px;
 }
 
 .RegistrarArticulo {
