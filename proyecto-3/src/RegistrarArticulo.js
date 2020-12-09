@@ -58,7 +58,7 @@ class RegistrarArticulo extends Component {
             profileImg: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
             imageFlag: false,
 
-            jsonFile : {
+            jsonFile: {
                 name: '',
                 brand: '',
                 price: 0,
@@ -220,9 +220,9 @@ class RegistrarArticulo extends Component {
     }
 
     actualizarListaDeportesTemp = () => {
-        if(this.state.sportSelect === ""){
+        if (this.state.sportSelect === "") {
 
-        }else{
+        } else {
             this.state.listaTempDeportes.push(this.state.sportSelect);
         }
     }
@@ -622,7 +622,7 @@ class RegistrarArticulo extends Component {
                                                     color="primary"
                                                     onClick={this.clickRegistrar}
                                                 >
-                                                    Registrarse
+                                                    Registrar Artículo
                                                         </Button>
                                             </Col>{/*Única Columna*/}
                                         </Row>{/*Quinta Fila*/}

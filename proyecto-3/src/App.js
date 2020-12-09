@@ -10,7 +10,7 @@ import SelectAdmin from './SelectAdmin';
 import PantallaPrincipal from './PantallaPrincipal';
 import RegistarRegalia from './RegistrarRegalia';
 import TestImage from './TestImage';
-//import TestRegistroArticulo from './TestRegistroArticulo';
+import TestRegistroArticulo from './TestRegistroArticulo';
 
 import {
   BrowserRouter as Router,

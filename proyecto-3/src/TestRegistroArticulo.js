@@ -58,7 +58,7 @@ class TestRegistroArticulo extends Component {
             profileImg: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
             imageFlag: false,
 
-            jsonFile : {
+            jsonFile: {
                 name: '',
                 brand: '',
                 price: 0,
@@ -67,7 +67,19 @@ class TestRegistroArticulo extends Component {
                 units: 0,
                 img: null,
                 type: ''
-            }
+            },
+
+            listaDia: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+            ],
+
+            listaMes: [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo",
+                "Junio", "Julio", "Agosto", "Septiembre",
+                "Octubre", "Noviembre", "Diciembre"
+            ]
         }
 
     }
@@ -87,326 +99,8 @@ class TestRegistroArticulo extends Component {
         console.log(this.state.jsonFile);
     }
 
-
-
-    componentDidMount = async (e) => {
-
-        await fetch(`http://localhost:5000/get_collection?collection=brand`).catch(err => alert(err))
-            .then(response => response.json())
-            .then(response => this.brandList(response))
-            .catch(err => this.errorHandler(err))
-
-        await fetch(`http://localhost:5000/get_collection?collection=sport`).catch(err => alert(err))
-            .then(response => response.json())
-            .then(response => this.sportList(response))
-            .catch(err => this.errorHandler(err))
-
-        await fetch(`http://localhost:5000/get_collection?collection=product_type`).catch(err => alert(err))
-            .then(response => response.json())
-            .then(response => this.product_TypeList(response))
-            .catch(err => this.errorHandler(err))
-    }
-
-    brandList = (res) => {
-
-        this.setState({
-            itemsBrand: res
-        })
-
-        this.crearBrandListDropdown();
-    }
-
-    crearBrandListDropdown = () => {
-        var temp = [];
-        for (let i = 0; i < this.state.itemsBrand.length; i++) {
-            temp.push(this.state.itemsBrand[i].name);
-            this.actualizarBrandListDropdown(temp);
-        }
-    }
-
-    actualizarBrandListDropdown = (res) => {
-        this.setState({
-            BrandListDrop: res
-        })
-    }
-
-    sportList = (res) => {
-        this.setState({
-            itemsSport: res
-        })
-        this.crearSportListDropdown();
-    }
-
-    crearSportListDropdown = () => {
-        var temp = [];
-        for (let i = 0; i < this.state.itemsSport.length; i++) {
-            temp.push(this.state.itemsSport[i].name);
-            this.actualizarSportListDropdown(temp);
-        }
-    }
-
-    actualizarSportListDropdown = (res) => {
-        this.setState({
-            SportListDrop: res
-        })
-    }
-
-    setListaDeportes = () => {
-        this.state.listaDeportesSeleccionados.push({ 'name': this.state.sportSelect })
-    }
-
-    product_TypeList = (res) => {
-
-        this.setState({
-            itemsProduct_Type: res
-        })
-        this.crearProduct_TypeListDropdown();
-    }
-
-    crearProduct_TypeListDropdown = () => {
-        var temp = [];
-        for (let i = 0; i < this.state.itemsProduct_Type.length; i++) {
-            temp.push(this.state.itemsProduct_Type[i].name);
-            this.actualizarProduct_TypeListDropdown(temp);
-        }
-    }
-
-    actualizarProduct_TypeListDropdown = (res) => {
-        this.setState({
-            Product_TypeListDrop: res
-        })
-    }
-
-    imageHandler = (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                this.setState({
-                    profileImg: reader.result,
-                    imageFlag: true
-                })
-            }
-        }
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    convertBase64Image = (file) => {
-        return new Promise((resolve, reject) => {
-            const filereader = new FileReader();
-            filereader.readAsDataURL(file);
-
-            filereader.onload = () => {
-                resolve(filereader.result)
-            }
-
-            filereader.onerror = (error) => {
-                reject(error);
-            }
-        });
-
-    }
-
-    clickSelectBrand = (event) => {
-        this.setState({
-            brandSelect: event
-        })
-    }
-
-    clickSelectSport = async (event) => {
-        this.setState({
-            sportSelect: event
-        })
-        await this.actualizarListaDeportesTemp();
-    }
-
-    actualizarListaDeportesTemp = () => {
-        if(this.state.sportSelect === ""){
-
-        }else{
-            this.state.listaTempDeportes.push(this.state.sportSelect);
-        }
-    }
-
-    clickSelectProduct_Type = (event) => {
-        this.setState({
-            product_TypeSelect: event
-        })
-    }
-
-    clickLimitada = (event) => {
-        if (this.state.limitadaFlag === "true") {
-            this.setState({
-                limitadaFlag: "false",
-                limitArticulo: false
-            })
-        } else {
-            this.setState({
-                limitadaFlag: "true",
-                limitArticulo: true
-            })
-        }
-    }
-
-    clickEstandar = (event) => {
-        if (this.state.estandarFlag === "true") {
-            this.setState({
-                estandarFlag: "false",
-                limitArticulo: false
-            })
-        } else {
-            this.setState({
-                estandarFlag: "true",
-                limitArticulo: false
-            })
-        }
-    }
-
-    clickRegistrar = (event) => {
-        if (this.state.nombreArticulo === '') {
-            Swal.fire(
-                'Error',
-                'Por favor introduzca el nombre del artículo',
-                'error'
-            );
-        } else {
-            if (this.state.brandSelect === '') {
-                Swal.fire(
-                    'Error',
-                    'Por favor seleccione la marca del artículo',
-                    'error'
-                );
-            } else {
-                if (this.state.precioArticulo <= 0) {
-                    Swal.fire(
-                        'Error',
-                        'Por favor introduzca el precio del artículo',
-                        'error'
-                    );
-                }
-                else {
-                    if (this.state.limitadaFlag === "false") {
-                        if (this.state.estandarFlag === "false") {
-                            Swal.fire(
-                                'Error',
-                                'Por favor seleccionar un tipo de edición',
-                                'error'
-                            );
-                        } else {
-                            if (this.state.unidadDisponibleArticulo === 0) {
-                                Swal.fire(
-                                    'Error',
-                                    'Por favor indique las unidades disponibles del artículo',
-                                    'error'
-                                );
-                            } else {
-                                if (this.state.product_TypeSelect === '') {
-                                    Swal.fire(
-                                        'Error',
-                                        'Por favor indique el tipo de producto del artículo',
-                                        'error'
-                                    );
-                                } else {
-                                    if (this.state.listaDeportesSeleccionados.length === 0) {
-                                        Swal.fire(
-                                            'Error',
-                                            'Por favor seleccione un Deporte asociado con el artículo',
-                                            'error'
-                                        );
-                                    } else {
-                                        if (this.state.imageFlag) {
-                                            Swal.fire(
-                                                'Registro Exitoso',
-                                                'El registro se ha realizado de manera exitosa',
-                                                'success'
-                                            );
-                                            this.createJsonFile();
-                                        } else {
-                                            Swal.fire(
-                                                'Error',
-                                                'Por favor seleccione una imagen',
-                                                'error'
-                                            );
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (this.state.estandarFlag === "false") {
-                            if (this.state.unidadDisponibleArticulo <= 0) {
-                                Swal.fire(
-                                    'Error',
-                                    'Por favor indique las unidades disponibles del artículo',
-                                    'error'
-                                );
-                            } else {
-                                if (this.state.product_TypeSelect === '') {
-                                    Swal.fire(
-                                        'Error',
-                                        'Por favor indique el tipo de producto del artículo',
-                                        'error'
-                                    );
-                                } else {
-                                    if (this.state.listaDeportesSeleccionados.length === 0) {
-                                        Swal.fire(
-                                            'Error',
-                                            'Por favor seleccione un Deporte asociado con el artículo',
-                                            'error'
-                                        );
-                                    } else {
-                                        if (this.state.imageFlag) {
-                                            Swal.fire(
-                                                'Registro Exitoso',
-                                                'El registro se ha realizado de manera exitosa',
-                                                'success'
-                                            );
-                                            this.createJsonFile();
-                                        } else {
-                                            Swal.fire(
-                                                'Error',
-                                                'Por favor seleccione una imagen',
-                                                'error'
-                                            );
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            Swal.fire(
-                                'Error',
-                                'Por favor solo seleccionar un tipo de edición',
-                                'error'
-                            );
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    clickNombre = (e) => {
-        this.setState({
-            nombreArticulo: e.target.value
-        })
-    }
-
-    clickPrecio = (e) => {
-        this.setState({
-            precioArticulo: Number(e.target.value)
-        })
-    }
-
-    clickUnidadesDisponibles = (e) => {
-        this.setState({
-            unidadDisponibleArticulo: Number(e.target.value)
-        })
-    }
-
     render() {
         localStorage.clear();
-        const columnsDeportes = [
-            { dataField: 'name', text: 'Deporte Seleccionado' }
-        ];
 
         return (
 
@@ -432,7 +126,7 @@ class TestRegistroArticulo extends Component {
                 <Container>
                     <Row>
                         <Col>
-                            <h1>Agregar Artículo</h1>
+                            <h1>Agregar Regalía</h1>
                         </Col>
                     </Row>
                     <br />
@@ -440,17 +134,15 @@ class TestRegistroArticulo extends Component {
                         <Col>
                             <Card className="card-user">
                                 <CardHeader>
-                                    <CardTitle tag="h3">Registrar un nuevo artículo</CardTitle>
+                                    <CardTitle tag="h3">Agregar una regalía a un artículo</CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Form>
-                                        {/*Primera Fila*/}
-                                        <Row>
-                                            {/*Primera Columna*/}
-                                            <Col>
+                                        <Row>{/*Primera Fila*/}
+                                            <Col>{/*Primera Columna*/}
                                                 <Row>
                                                     <Col>
-                                                        <label className="labelSetting">Nombre</label>
+                                                        <label className="labelSetting">Nombre de la regalía</label>
                                                     </Col>
                                                 </Row>
                                                 <Row>
@@ -458,178 +150,190 @@ class TestRegistroArticulo extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
-                                                            onSelect={this.clickNombre}
                                                         />
-                                                    </Col>
-                                                </Row>
-                                            </Col> {/*Primera Columna*/}
-                                            {/*Segunda Columna*/}
-                                            <Col>
-                                                <Row>
-                                                    <Col>
-                                                        <label className="labelSetting">Marca</label>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        <DropdownButton
-                                                            as={ButtonGroup}
-                                                            title={"Marca a seleccionar"}
-                                                            className='scrollDelDrop'
-                                                            onSelect={this.clickSelectBrand}
-                                                        >
-                                                            {this.state.BrandListDrop.map((name) => (
-                                                                <Dropdown.Item eventKey={name}>{name}</Dropdown.Item>
-                                                            ))}
-                                                        </DropdownButton>
-                                                        <p>{this.state.brandSelect}</p>
-                                                    </Col>
-                                                </Row>
-                                            </Col> {/*Segunda Columna*/}
-                                            {/*Tercera Columna*/}
-                                            <Col>
-                                                <Row>
-                                                    <Col>
-                                                        <label className="labelSetting">Precio</label>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        <Input placeholder="Precio" type="number" onChange={this.clickPrecio} />
-                                                    </Col>
-                                                </Row>
-                                            </Col> {/*Tercera Columna*/}
-                                        </Row> {/*Primera Fila*/}
-                                        <br />
-                                        <Row>{/*Segunda Fila*/}
-                                            <Col>{/*Primera Columna*/}
-                                                <Row>
-                                                    <Col>
-                                                        <label className="labelSetting">Edición</label>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        <Form.Check type="checkbox" label="Limitada" onClick={this.clickLimitada} />
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col>
-                                                        <Form.Check type="checkbox" label="Estándar" onClick={this.clickEstandar} />
                                                     </Col>
                                                 </Row>
                                             </Col>{/*Primera Columna*/}
                                             <Col>{/*Segunda Columna*/}
                                                 <Row>
                                                     <Col>
-                                                        <label className="labelSetting">Unidades Disponibles</label>
+                                                        <label className="labelSetting">Nombre del producto al que aplica</label>
                                                     </Col>
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <Input placeholder="Unidades" type="number" onChange={this.clickUnidadesDisponibles} />
+                                                        <Input
+                                                            placeholder="Nombre"
+                                                            type="text"
+                                                        />
                                                     </Col>
                                                 </Row>
                                             </Col>{/*Segunda Columna*/}
-                                            <Col>{/*Tercera Columna*/}
+                                        </Row>{/*Primera Fila*/}
+                                        <br />
+                                        <Row>{/*Segunda Fila*/}
+                                            <Col>
                                                 <Row>
                                                     <Col>
-                                                        <label className="labelSetting">Tipo</label>
+                                                        <label className="labelSetting">Descripción de la Promoción</label>
                                                     </Col>
                                                 </Row>
                                                 <Row>
                                                     <Col>
-                                                        <DropdownButton
-                                                            as={ButtonGroup}
-                                                            title={"Tipo del producto"}
-                                                            className='scrollDelDrop'
-                                                            onSelect={this.clickSelectProduct_Type}
-                                                        >
-                                                            {this.state.Product_TypeListDrop.map((name) => (
-                                                                <Dropdown.Item eventKey={name}>{name}</Dropdown.Item>
-                                                            ))}
-                                                        </DropdownButton>
-                                                        <p>{this.state.product_TypeSelect}</p>
+                                                        <Form.Control as="textarea" rows={3} />
                                                     </Col>
                                                 </Row>
-                                            </Col>{/*Tercera Columna*/}
+                                            </Col>
                                         </Row>{/*Segunda Fila*/}
+                                        <br />
                                         <Row>{/*Tercera Fila*/}
-                                            <Col>{/*Única Columna*/}
-                                                <Row>{/*Primera Fila*/}
+                                            <Col>
+                                                <Row>
                                                     <Col>
-                                                        <label className="labelSetting">Deportes</label>
+                                                        <label className="labelSetting">Descripción de la Regalía</label>
                                                     </Col>
-                                                </Row>{/*Primera Fila*/}
-                                                <Row>{/*Segunda Fila*/}
-                                                    <Col xs={1} md={12}>
-                                                        <DropdownButton
-                                                            as={ButtonGroup}
-                                                            title={"Deporte a seleccionar"}
-                                                            className='scrollDelDrop'
-                                                            onSelect={this.clickSelectSport}
-                                                        >
-                                                            {this.state.SportListDrop.map((name) => (
-                                                                <Dropdown.Item eventKey={name}>{name}</Dropdown.Item>
-                                                            ))}
-                                                        </DropdownButton>
-                                                        <p>{this.state.sportSelect}</p>
-                                                        <Button
-                                                            className="btn-round"
-                                                            color="primary"
-                                                            onClick={this.setListaDeportes}
-                                                        >
-                                                            Añadir
-                                                        </Button>
-                                                    </Col>
-                                                </Row>{/*Segunda Fila*/}
-                                                <br />
-                                                <Row>{/*Tercera Fila*/}
+                                                </Row>
+                                                <Row>
                                                     <Col>
-                                                        <BootstrapTable
-                                                            keyField="name"
-                                                            data={this.state.listaDeportesSeleccionados}
-                                                            columns={columnsDeportes} />
+                                                        <Form.Control as="textarea" rows={3} />
                                                     </Col>
-                                                </Row>{/*Tercera Fila*/}
-                                            </Col>{/*Única Columna*/}
+                                                </Row>
+                                            </Col>
                                         </Row>{/*Tercera Fila*/}
                                         <br />
                                         <Row>{/*Cuarta Fila*/}
-                                            <Col>{/*Única Columna*/}
-                                                <Row>{/*Primera Fila*/}
-                                                    <Col>
-                                                        <label className="labelSetting">Seleccione la imagen</label>
-                                                    </Col>
-                                                </Row>{/*Primera Fila*/}
-                                                <Row>{/*Segunda Fila*/}
-                                                    <Col>
-                                                        <img src={this.state.profileImg} alt="Imagen de Perfil" className="testImage"></img>
-                                                    </Col>
-                                                </Row>{/*Segunda Fila*/}
-                                                <Row>{/*Tercera Fila*/}
-                                                    <Col>
-                                                        <input type="file" name="image-upload" id="input" accept="image/*" onChange={this.imageHandler}></input>
-                                                    </Col>
-                                                </Row>{/*Tercera Fila*/}
-                                            </Col>{/*Única Columna*/}
+                                            <Col>
+                                                <label className="labelSetting">Fechas</label>
+                                            </Col>
                                         </Row>{/*Cuarta Fila*/}
                                         <br />
-                                        <Row>{/*Quinta Fila*/}
-                                            <Col>{/*Única Columna*/}
-                                                <Button
-                                                    className="btn-round"
-                                                    color="primary"
-                                                    onClick={this.clickRegistrar}
-                                                >
-                                                    Registrarse
-                                                        </Button>
-                                            </Col>{/*Única Columna*/}
-                                        </Row>{/*Quinta Fila*/}
+                                        <Row>
+                                            <Col>{/*Primera Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Fecha de inicio</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>{/*Día*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Día</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Día"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaDia.map((dia) => (
+                                                                        <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Día*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Mes</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Mes"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaMes.map((mes) => (
+                                                                        <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Año</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <Input placeholder="Año" type="number" />
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                </Row>
+                                            </Col>{/*Primera Columna*/}
+                                            <Col>{/*Segunda Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Fecha Final</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>{/*Día*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Día</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Día"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaDia.map((dia) => (
+                                                                        <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Día*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Mes</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Mes"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaMes.map((mes) => (
+                                                                        <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Año</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <Input placeholder="Año" type="number" />
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                </Row>
+                                            </Col>{/*Segunda Columna*/}
+                                        </Row>
                                     </Form>
                                 </CardBody>
                             </Card>
-                            <br />
                         </Col>
                     </Row>
                 </Container>

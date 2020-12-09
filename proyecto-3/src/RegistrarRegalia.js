@@ -13,152 +13,346 @@ import {
     CardFooter,
     CardTitle,
     FormGroup,
-    Form,
     Input,
 } from "reactstrap";
-import './Test.css';
+import Form from 'react-bootstrap/Form'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import "./RegistrarRegalia.css";
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationfactory from 'react-bootstrap-table2-paginator';
 
-class RegistarRegalia extends Component {
+class RegistrarRegalia extends Component {
 
     constructor(props) {
+        console.log("Entra a RegistrarRegalia");
         super(props)
         this.state = {
+
+            nombreArticulo: '',
+
+            itemsBrand: [],
+            BrandListDrop: [
+            ],
+            brandSelect: '',
+
+            precioArticulo: 0,
+
+            unidadDisponibleArticulo: 0,
+
+            itemsSport: [],
+            SportListDrop: [],
+            sportSelect: '',
+            listaDeportesSeleccionados: [],
+            listaTempDeportes: [],
+
+            itemsProduct_Type: [],
+            Product_TypeListDrop: [],
+            product_TypeSelect: '',
+
+            limitadaFlag: "false",
+            estandarFlag: "false",
+            limitArticulo: false,
+
+            profileImg: 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png',
+            imageFlag: false,
+
+            jsonFile: {
+                name: '',
+                brand: '',
+                price: 0,
+                sports: [],
+                limit: false,
+                units: 0,
+                img: null,
+                type: ''
+            },
+
+            listaDia: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+            ],
+
+            listaMes: [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo",
+                "Junio", "Julio", "Agosto", "Septiembre",
+                "Octubre", "Noviembre", "Diciembre"
+            ]
         }
 
+    }
+
+
+    createJsonFile = () => {
+        this.state.jsonFile.name = this.state.nombreArticulo;
+        this.state.jsonFile.brand = this.state.brandSelect;
+        this.state.jsonFile.price = this.state.precioArticulo;
+        this.state.jsonFile.sports = this.state.listaTempDeportes;
+        this.state.jsonFile.limit = this.state.limitArticulo;
+        this.state.jsonFile.units = this.state.unidadDisponibleArticulo;
+        this.state.jsonFile.img = this.state.profileImg;
+        this.state.jsonFile.type = this.state.product_TypeSelect;
+
+        console.log("El JsonFile");
+        console.log(this.state.jsonFile);
     }
 
     render() {
         localStorage.clear();
 
         return (
-            <div className='RegistarRegalia'><Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
 
-                <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
+            <div className='RegistrarRegalia'>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
 
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
 
-                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-                    <Nav className="m-auto">
-                        <Nav.Link href="./RegistrarArticulo">Registrar Artículo</Nav.Link>
-                        <Nav.Link href="./RegistrarPromocion">Registrar Promoción</Nav.Link>
-                        <Nav.Link href="./RegistarRegalia">Registrar Regalía</Nav.Link>
-                        <Nav.Link href="./SelectAdmin">Salir</Nav.Link>
-                    </Nav>
+                    <Navbar.Collapse id="responsive-navbar-nav">
 
-                </Navbar.Collapse>
-            </Navbar>
-            <br/>
+                        <Nav className="m-auto">
+                            <Nav.Link href="./RegistrarArticulo">Registrar Artículo</Nav.Link>
+                            <Nav.Link href="./RegistrarPromocion">Registrar Promoción</Nav.Link>
+                            <Nav.Link href="./RegistarRegalia">Registrar Regalía</Nav.Link>
+                            <Nav.Link href="./SelectAdmin">Salir</Nav.Link>
+                        </Nav>
 
+                    </Navbar.Collapse>
+                </Navbar>
+                <br />
                 <Container>
                     <Row>
-                        <Col md="12">
+                        <Col>
+                            <h1>Agregar Regalía</h1>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col>
                             <Card className="card-user">
                                 <CardHeader>
-                                    <CardTitle tag="h5">Registrar una nueva regalía</CardTitle>
+                                    <CardTitle tag="h3">Agregar una regalía a un artículo</CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <Form>
-                                        <Row>
-                                            <Col className="pr-1" md="5">
-                                                <FormGroup>
-                                                    <label>Nombre</label>
-                                                    <Input
-                                                        placeholder="Nombre"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
+                                        <Row>{/*Primera Fila*/}
+                                            <Col>{/*Primera Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Nombre de la regalía</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Input
+                                                            placeholder="Nombre"
+                                                            type="text"
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </Col>{/*Primera Columna*/}
+                                            <Col>{/*Segunda Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Nombre del producto al que aplica</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Input
+                                                            placeholder="Nombre"
+                                                            type="text"
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </Col>{/*Segunda Columna*/}
+                                        </Row>{/*Primera Fila*/}
+                                        <br />
+                                        <Row>{/*Segunda Fila*/}
+                                            <Col>
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Descripción de la Promoción</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Form.Control as="textarea" rows={3} />
+                                                    </Col>
+                                                </Row>
                                             </Col>
-                                            <Col className="px-1" md="3">
-                                                <FormGroup>
-                                                    <label>Marca</label>
-                                                    <Input
-                                                        placeholder="Marca"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
+                                        </Row>{/*Segunda Fila*/}
+                                        <br />
+                                        <Row>{/*Tercera Fila*/}
+                                            <Col>
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Descripción de la Regalía</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>
+                                                        <Form.Control as="textarea" rows={3} />
+                                                    </Col>
+                                                </Row>
                                             </Col>
-                                            <Col className="pl-1" md="4">
-                                                <FormGroup>
-                                                    <FormGroup>
-                                                        <label>Precio</label>
-                                                        <Input placeholder="Precio" type="number" />
-                                                    </FormGroup>
-                                                </FormGroup>
+                                        </Row>{/*Tercera Fila*/}
+                                        <br />
+                                        <Row>{/*Cuarta Fila*/}
+                                            <Col>
+                                                <label className="labelSetting">Fechas</label>
                                             </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="pr-1" md="5">
-                                                <FormGroup>
-                                                    <label>Deportes</label>
-                                                    <Input
-                                                        placeholder="Deportes"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
+                                        </Row>{/*Cuarta Fila*/}
+                                        <br />
+                                        <Row>{/*Quinta Fila*/}
+                                            <Col>{/*Primera Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Fecha de inicio</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>{/*Día*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Día</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Día"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaDia.map((dia) => (
+                                                                        <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Día*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Mes</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Mes"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaMes.map((mes) => (
+                                                                        <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Año</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <Input placeholder="Año" type="number" />
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                </Row>
+                                            </Col>{/*Primera Columna*/}
+                                            <Col>{/*Segunda Columna*/}
+                                                <Row>
+                                                    <Col>
+                                                        <label className="labelSetting">Fecha Final</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col>{/*Día*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Día</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Día"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaDia.map((dia) => (
+                                                                        <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Día*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Mes</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Mes"}
+                                                                    className='scrollDelDrop'
+                                                                >
+                                                                    {this.state.listaMes.map((mes) => (
+                                                                        <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                    <Col>{/*Mes*/}
+                                                        <Row>
+                                                            <Col>
+                                                                <label className="labelSetting">Año</label>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col>
+                                                                <Input placeholder="Año" type="number" />
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>{/*Mes*/}
+                                                </Row>
+                                            </Col>{/*Segunda Columna*/}
+                                        </Row>{/*Quinta Fila*/}
+                                        <br />
+                                        <Row>{/*Sexta Fila*/}
+                                            <Col>
+                                            <Button
+                                                            className="btn-round"
+                                                            color="primary"
+                                                        >
+                                                            Registrar Regalía
+                                                        </Button>
                                             </Col>
-                                            <Col className="px-1" md="3">
-                                                <FormGroup>
-                                                    <label>Edicion</label>
-                                                    <Input
-                                                        placeholder="Edicion"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col className="pl-1" md="4">
-                                                <FormGroup>
-                                                    <FormGroup>
-                                                        <label>Unidades Disponibles</label>
-                                                        <Input placeholder="Numero de unidades" type="number" />
-                                                    </FormGroup>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="px-1" md="12">
-                                                <FormGroup>
-                                                    <label>Tipo</label>
-                                                    <Input
-                                                        placeholder="Tipo"
-                                                        type="text"
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md="12">
-                                                <FormGroup>
-                                                    <label>About Me</label>
-                                                    <Input
-                                                        type="textarea"
-                                                        defaultValue="Oh so, your weak rhyme You doubt I'll bother, reading into it"
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <div className="update ml-auto mr-auto">
-                                                <Button
-                                                    className="btn-round"
-                                                    color="primary"
-                                                    type="submit"
-                                                >
-                                                    Update Profile
-                        </Button>
-                                            </div>
-                                        </Row>
+                                        </Row>{/*Sexta  Fila*/}
                                     </Form>
                                 </CardBody>
                             </Card>
+                            <br />
                         </Col>
                     </Row>
-
                 </Container>
+                
 
             </div>
-        );
+        )
     }
 }
-
-export default RegistarRegalia
+export default RegistrarRegalia
