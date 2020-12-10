@@ -2,7 +2,7 @@ import './App.css';
 import Test from './Test';
 import RegistrarArticulo from './RegistrarArticulo';
 import RegistrarPromocion from './RegistrarPromocion';
-import BusquedaCliente from './BusquedaCliente';
+import HistorialCliente from './HistorialCliente';
 import VistaArticulos from './VistaArticulos';
 import BusquedaArticulo from './BusquedaArticulo';
 import BusquedaClientexProducto from './BusquedaClientexProducto';
@@ -31,8 +31,8 @@ function App() {
         <Route path="/RegistrarPromocion">
           <RegistrarPromocion />
         </Route>
-        <Route path="/BusquedaCliente">
-          <BusquedaCliente />
+        <Route path="/HistorialCliente">
+          <HistorialCliente />
         </Route>
         <Route path="/VistaArticulos">
           <VistaArticulos />

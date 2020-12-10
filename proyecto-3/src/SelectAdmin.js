@@ -15,6 +15,7 @@ class SelectAdmin extends Component {
         this.state = {
             pantallaPrincipalFlag: false,
             registroArticuloFlag: false,
+            clienteFlag: false,
         }
 
     }
@@ -25,6 +26,10 @@ class SelectAdmin extends Component {
         } else {
             if (this.state.registroArticuloFlag) {
                 return <Redirect to='/RegistrarArticulo' />
+            }else{
+                if(this.state.clienteFlag) {
+                    return <Redirect to='/HistorialCliente' />
+                }
             }
         }
     }
@@ -38,6 +43,12 @@ class SelectAdmin extends Component {
     clickPresionadoRegistro = (event) => {
         this.setState({
             registroArticuloFlag: true
+        })
+    }
+
+    clickPresionadoCliente = (event) => {
+        this.setState({
+            clienteFlag: true
         })
     }
 
@@ -73,12 +84,12 @@ class SelectAdmin extends Component {
                                 <Card.Body>
                                     <Card.Title>Consultas</Card.Title>
                                     <Card.Text>
-                                        Hay 4 tipos de consultas: Búsqueda de un cliente en particular,
+                                        Hay 4 tipos de consultas: Búsqueda del historial de un cliente en particular,
                                         Ver todos los productos adquiridos, Buscar un producto en específico
                                         y Búsqueda de al menos un producto en común entre clientes a partir
                                         de un cliente.
                                     </Card.Text>
-                                    <Button variant="dark" size="lg">Entrar</Button>
+                                    <Button variant="dark" size="lg" onClick={this.clickPresionadoCliente}>Entrar</Button>
                                 </Card.Body>
                             </Card>
                         </Col>

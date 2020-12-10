@@ -1,0 +1,32 @@
+.scrollDelDrop {
+    height: 60px;
+    width: 140px;
+    overflow-y: scroll;
+}
+
+.VistaArticulos {
+    text-align: center;
+}
+
+.testImage {
+    width:300px;
+    height:300px;
+    flex: 1;
+    resize: none;
+}
+
+.labelSetting {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.jumbotronSetting {
+    background: none;
+    font-size: 24px;
+}
+
+.inputName {
+  font-size: 18px;
+  padding: 2px 5px;
+}
+  

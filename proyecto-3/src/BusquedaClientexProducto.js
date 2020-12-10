@@ -19,26 +19,26 @@ class BusquedaClientexProducto extends Component {
         localStorage.clear();
 
         return (
-            <div className='BusquedaClientexProducto'><Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
+            <div className='BusquedaClientexProducto'>
 
-                <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
 
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
 
-                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
-                    <Nav className="m-auto">
-                        <Nav.Link href="./RegistrarArticulo">Registrar Artículo</Nav.Link>
-                        <Nav.Link href="./RegistrarPromocion">Registrar Promoción</Nav.Link>
-                        <Nav.Link href="./BusquedaCliente">Búsqueda de Cliente</Nav.Link>
-                        <Nav.Link href="./VistaArticulos">Vista Artículos</Nav.Link>
-                        <Nav.Link href="./BusquedaArticulo">Búsqueda Artículo</Nav.Link>
-                        <Nav.Link href="./BusquedaClientexProducto">Búsqueda Cliente por Producto</Nav.Link>
-                        <Nav.Link href="./Test">Salir</Nav.Link>
-                    </Nav>
+                    <Navbar.Collapse id="responsive-navbar-nav">
 
-                </Navbar.Collapse>
-            </Navbar>
+                        <Nav className="m-auto">
+                            <Nav.Link href="./HistorialCliente">Historial del Cliente</Nav.Link>
+                            <Nav.Link href="./VistaArticulos">Productos Adquiridos</Nav.Link>
+                            <Nav.Link href="./BusquedaArticulo">Búsqueda Artículo</Nav.Link>
+                            <Nav.Link href="./BusquedaClientexProducto">Búsqueda Cliente por Producto</Nav.Link>
+                            <Nav.Link href="./SelectAdmin">Salir</Nav.Link>
+                        </Nav>
+
+                    </Navbar.Collapse>
+                </Navbar>
 
                 <Container>
                     <Row>
