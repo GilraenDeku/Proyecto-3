@@ -11,6 +11,7 @@ import PantallaPrincipal from './PantallaPrincipal';
 import RegistarRegalia from './RegistrarRegalia';
 import TestImage from './TestImage';
 import TestRegistroArticulo from './TestRegistroArticulo';
+import RegisterPageClient from './RegisterPageClient';
 
 import {
   BrowserRouter as Router,
@@ -22,6 +23,9 @@ function App() {
   return (
     <Router>
       <Switch>
+      <Route path="/RegisterPageClient">
+          <RegisterPageClient />
+        </Route>
         <Route path="/Test">
           <Test />
         </Route>

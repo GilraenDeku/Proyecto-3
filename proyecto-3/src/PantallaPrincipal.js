@@ -11,7 +11,8 @@ class PantallaPrincipal extends Component {
         console.log("Entra a Pantalla Principal");
         super(props)
         this.state = {
-            selectFlag: false
+            selectFlag: false,
+            registerFlag: false
         }
 
     }
@@ -19,12 +20,22 @@ class PantallaPrincipal extends Component {
     renderRedirect = () => {
         if (this.state.selectFlag) {
           return <Redirect to='/SelectAdmin' />
+        }else{
+            if(this.state.registerFlag){
+                return <Redirect to='/RegisterPageClient' />
+            }
         }
     }
 
     clickPresionado = (event) =>{
     	this.setState({
             selectFlag: true
+        })
+	}
+
+    clickPresionadoRegister = (event) =>{
+    	this.setState({
+            registerFlag: true
         })
 	}
 
@@ -39,6 +50,7 @@ class PantallaPrincipal extends Component {
                         <Col>
                             <h1>Esta es la Pantalla Principal</h1>
                             <Button variant="dark" size="lg" onClick={this.clickPresionado}>Entrar</Button>
+                            <Button variant="dark" size="lg" onClick={this.clickPresionadoRegister}>Registrar</Button>
                         </Col>
                     </Row>
 
