@@ -32,16 +32,16 @@ class VistaArticulos extends Component {
 
     componentDidMount = async (e) => {
         fetch(`http://localhost:5000/count_sales`).catch(err => alert(err))
-          .then(response => response.json())
-          .then(response => this.listData(response))
-          .catch(err => this.errorHandler(err))
-      }
+            .then(response => response.json())
+            .then(response => this.listData(response))
+            .catch(err => this.errorHandler(err))
+    }
 
-      listData = (e) => {
-          this.setState({
+    listData = (e) => {
+        this.setState({
             tableData: e
-          })
-      }
+        })
+    }
 
     render() {
         localStorage.clear();
@@ -90,7 +90,7 @@ class VistaArticulos extends Component {
                                     <Form>
                                         <Row>
                                             <Col>
-                                            <BootstrapTable
+                                                <BootstrapTable
                                                     keyField="dia"
                                                     data={this.state.tableData}
                                                     columns={columns}
