@@ -36,6 +36,7 @@ class HistorialCliente extends Component {
     }
 
     clickRealizarBusqueda = () => {
+        console.log('entra');
         if (this.state.usernameFlag) {
             this.state.data.query = "USERNAME";
             this.state.data.name = this.state.clientName;
@@ -59,9 +60,19 @@ class HistorialCliente extends Component {
             body: JSON.stringify(this.state.data)
         };
 
+
+
         const response = await fetch(url, requestOptions);
-        const dataImprimir = await response.json();
-        this.testDatos(dataImprimir);
+        if(response.status === 404){
+            Swal.fire(
+                'Error',
+                'Ese nombre no existe, por favor elegir un cliente existente',
+                'error'
+            );
+        }else{
+            const dataImprimir = await response.json();
+            this.testDatos(dataImprimir);
+        }
 
     }
 
@@ -76,8 +87,16 @@ class HistorialCliente extends Component {
         };
 
         const response = await fetch(url, requestOptions);
-        const dataImprimir = await response.json();
-        this.testDatos(dataImprimir);
+        if(response.status === 404){
+            Swal.fire(
+                'Error',
+                'Ese Username no existe, por favor elegir un cliente existente',
+                'error'
+            );
+        }else{
+            const dataImprimir = await response.json();
+            this.testDatos(dataImprimir);
+        }
 
     }
 
@@ -88,6 +107,8 @@ class HistorialCliente extends Component {
 
         var temp = [];
 
+        var contador = 1;
+
         for (let i = 0; i < 50; i++) {
 
             if (this.state.historial[i] === undefined) {
@@ -96,12 +117,14 @@ class HistorialCliente extends Component {
                 for (let t = 0; t < this.state.historial[i].products.length; t++) {
 
                     temp.push({
+                        'id': contador,
                         'dia': this.state.historial[i].date,
                         'precio': this.state.historial[i].cost,
                         'nombre': this.state.historial[i].products[t].name,
                         'cantidad': this.state.historial[i].products[t].amount
                     });
                 }
+                contador = contador + 1;
 
             }
 
@@ -126,11 +149,6 @@ class HistorialCliente extends Component {
                     );
                 } else {
                     this.clickRealizarBusqueda();
-                    Swal.fire(
-                        'Búsqueda Exitoso',
-                        'La búsqueda se ha realizado de manera exitosa',
-                        'success'
-                    );
                 }
             }
         } else {
@@ -150,11 +168,6 @@ class HistorialCliente extends Component {
                     );
                 } else {
                     this.clickRealizarBusqueda();
-                    Swal.fire(
-                        'Búsqueda Exitoso',
-                        'La búsqueda se ha realizado de manera exitosa',
-                        'success'
-                    );
                 }
             }
         }
@@ -194,13 +207,20 @@ class HistorialCliente extends Component {
         this.setState({
             tableData: e
         })
+
+        Swal.fire(
+            'Búsqueda Exitoso',
+            'La búsqueda se ha realizado de manera exitosa',
+            'success'
+        );
     }
 
     render() {
         localStorage.clear();
         const columnsHistorial = [
+            { dataField: 'id', text: 'ID de la compra' },
             { dataField: 'dia', text: 'Fecha de la Compra' },
-            { dataField: 'precio', text: 'Precio del Producto' },
+            { dataField: 'precio', text: 'Precio total de la compra' },
             { dataField: 'nombre', text: 'Nombre del Producto' },
             { dataField: 'cantidad', text: 'Cantidad Comprada' }
         ];

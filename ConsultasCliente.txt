@@ -1,0 +1,66 @@
+CLIENTE
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+REGISTRO DE UN CLIENTE
+
+409 ERROR - El usuario ya existe 
+
+http://localhost:5000/register_client
+
+{"username": "Joseda8", "password": "test", "name": "Jose Montoya Salazar", "birthday": "19980815", "gender": "M"}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Ver Historial del cliente
+
+localStorage - nombre del cliente
+
+POST
+
+http://localhost:5000/client_history
+
+{"query": "USERNAME", "name": "Jose Montoya Salazar"}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Carrito de Compras Kevin
+
+Fecha se pasa 
+
+
+http://localhost:5000/add_purchase
+{"client": "Joseda8", "date": "20201222", "products": [{"name": "Tenis Predator", "amount": 2}, {"name": "Brazuca", "amount": 1}]}
+
+ERROR 409 - no hay inventario disponible
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -40,11 +40,23 @@ class BusquedaArticulo extends Component {
 
     }
 
-    llamadaABusqueda = async (e) => {
-        fetch(`http://localhost:5000/find_product?product_name=${this.state.nameSelect}`).catch(err => alert(err))
-            .then(response => response.json())
-            .then(response => this.listData(response))
-            .catch(err => this.errorHandler(err))
+    llamadaALaBase = async () => {
+        const response = await fetch(`http://localhost:5000/find_product?product_name=${this.state.nameSelect}`);
+        if (response.status === 404) {
+            Swal.fire(
+                'Error',
+                'Ese nombre no existe, por favor elegir un artículo existente',
+                'error'
+            );
+        } else {
+            const dataImprimir = await response.json();
+            this.listData(dataImprimir);
+            Swal.fire(
+                'Registro Exitoso',
+                'El registro se realizó de manera exitosa',
+                'success'
+            );
+        }
     }
 
     listData = (e) => {
@@ -55,9 +67,8 @@ class BusquedaArticulo extends Component {
 
     clickNameSelect = (e) => {
         this.setState({
-            nameSelect: e
+            nameSelect: e.target.value
         })
-        console.log(this.state.nameSelect);
     }
 
     crearBusqueda = () => {
@@ -157,14 +168,35 @@ class BusquedaArticulo extends Component {
         var imageTest = '';
         const test = e;
         const largo = test.length;
-        imageTest = test.substring(23, largo);
-        console.log(imageTest);
-        this.setState({
-            profileImg: imageTest
-        })
+        if (test[23] === '/') {
+            imageTest = test.substring(23, largo);
+            this.setState({
+                profileImg: imageTest
+            })
+        }else{
+            imageTest = test.substring(22, largo);
+            this.setState({
+                profileImg: imageTest
+            })
+        }
+    }
+
+    llamadaFinal = () => {
+        this.llamadaALaBase();
+        this.crearBusqueda();
     }
 
     clickBusquedaArticulo = () => {
+        if (this.state.nameSelect === '') {
+            Swal.fire(
+                'Error',
+                'Por favor escribir el nombre del Producto',
+                'error'
+            );
+        } else {
+            this.llamadaALaBase();
+            this.llamadaFinal();
+        }
     }
 
     render() {
@@ -232,6 +264,7 @@ class BusquedaArticulo extends Component {
                                                     placeholder="Nombre"
                                                     type="text"
                                                     className="inputName"
+                                                    onChange={this.clickNameSelect}
                                                 />
                                             </Col>
                                         </Row>
@@ -241,7 +274,7 @@ class BusquedaArticulo extends Component {
                                                 <Button
                                                     className="btn-round"
                                                     color="primary"
-                                                    onClick={this.crearBusqueda}
+                                                    onClick={this.clickBusquedaArticulo}
                                                 >
                                                     Buscar Artículo
                                                         </Button>

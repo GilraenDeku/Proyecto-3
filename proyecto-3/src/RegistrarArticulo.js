@@ -72,6 +72,35 @@ class RegistrarArticulo extends Component {
 
     }
 
+    registrarArticuloNuevo = async () => {
+
+        const url = `http://localhost:5000/insert_product`;
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state.jsonFile)
+        };
+
+
+
+        const response = await fetch(url, requestOptions);
+        if(response.status === 400){
+            Swal.fire(
+                'Error',
+                'El registro no se realizó de la manera correcta',
+                'error'
+            );
+        }else{
+            Swal.fire(
+                'Registro Exitoso',
+                'El registro se ha realizado de manera exitosa',
+                'success'
+            );
+        }
+
+    }
+
 
     createJsonFile = () => {
         this.state.jsonFile.name = this.state.nombreArticulo;
@@ -85,6 +114,8 @@ class RegistrarArticulo extends Component {
 
         console.log("El JsonFile");
         console.log(this.state.jsonFile);
+
+        this.registrarArticuloNuevo();
     }
 
 
@@ -314,11 +345,6 @@ class RegistrarArticulo extends Component {
                                         );
                                     } else {
                                         if (this.state.imageFlag) {
-                                            Swal.fire(
-                                                'Registro Exitoso',
-                                                'El registro se ha realizado de manera exitosa',
-                                                'success'
-                                            );
                                             this.createJsonFile();
                                         } else {
                                             Swal.fire(
@@ -355,11 +381,6 @@ class RegistrarArticulo extends Component {
                                         );
                                     } else {
                                         if (this.state.imageFlag) {
-                                            Swal.fire(
-                                                'Registro Exitoso',
-                                                'El registro se ha realizado de manera exitosa',
-                                                'success'
-                                            );
                                             this.createJsonFile();
                                         } else {
                                             Swal.fire(

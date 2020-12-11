@@ -71,6 +71,35 @@ class RegistrarRegalia extends Component {
 
     }
 
+    registrarArticuloNuevo = async () => {
+
+        const url = `http://localhost:5000/add_offer?product_name=${this.state.nombreProducto}`;
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state.jsonFile)
+        };
+
+
+
+        const response = await fetch(url, requestOptions);
+        if(response.status === 400){
+            Swal.fire(
+                'Error',
+                'El registro no se realizó de la manera correcta',
+                'error'
+            );
+        }else{
+            Swal.fire(
+                'Registro Exitoso',
+                'El registro se ha realizado de manera exitosa',
+                'success'
+            );
+        }
+
+    }
+
     clickNombreRegalia = (e) => {
         this.setState({
             nombreRegalia: e.target.value
@@ -252,9 +281,7 @@ class RegistrarRegalia extends Component {
         this.state.jsonFile.start = this.state.fechaInitJson;
         this.state.jsonFile.end = this.state.fechaFinalJson;
 
-        console.log("El JsonFile");
-        console.log(this.state.jsonFile);
-        console.log();
+        this.registrarArticuloNuevo();
     }
 
     clickRegistrarRegalia = () => {
@@ -310,11 +337,6 @@ class RegistrarRegalia extends Component {
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         this.crearConsultaFinal();
-                                        swalWithBootstrapButtons.fire(
-                                            'Registro Exitoso',
-                                            'El registro se realizó de manera exitosa',
-                                            'success'
-                                        )
                                     } else if (
                                         /* Read more about handling dismissals below */
                                         result.dismiss === Swal.DismissReason.cancel
@@ -346,11 +368,6 @@ class RegistrarRegalia extends Component {
               }).then((result) => {
                 if (result.isConfirmed) {
                     this.crearConsultaFinal();
-                  swalWithBootstrapButtons.fire(
-                    'Registro Exitoso',
-                    'El registro se realizó de manera exitosa',
-                    'success'
-                  )
                 } else if (
                   /* Read more about handling dismissals below */
                   result.dismiss === Swal.DismissReason.cancel
