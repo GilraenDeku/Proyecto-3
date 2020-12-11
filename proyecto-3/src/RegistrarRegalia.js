@@ -281,6 +281,9 @@ class RegistrarRegalia extends Component {
         this.state.jsonFile.start = this.state.fechaInitJson;
         this.state.jsonFile.end = this.state.fechaFinalJson;
 
+        console.log();
+        console.log(this.state.jsonFile);
+        console.log();
         this.registrarArticuloNuevo();
     }
 
