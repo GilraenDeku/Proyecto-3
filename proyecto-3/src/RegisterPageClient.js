@@ -15,7 +15,10 @@ import {
     CardTitle,
     Input,
 } from "reactstrap";
-import Form from 'react-bootstrap/Form'
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Form from 'react-bootstrap/Form';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationfactory from 'react-bootstrap-table2-paginator';
 import { Redirect } from 'react-router-dom';
@@ -48,7 +51,20 @@ class RegisterPageClient extends Component {
                 name: '',
                 birthday: '',
                 gender: ''
-            }
+            },
+            entraP: false,
+            listaDia: [
+                '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+                '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+                '31'
+            ],
+
+            listaMes: [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo",
+                "Junio", "Julio", "Agosto", "Septiembre",
+                "Octubre", "Noviembre", "Diciembre"
+            ]
 
 
         }
@@ -83,13 +99,10 @@ class RegisterPageClient extends Component {
         this.setState({
             nombreCompleto: this.state.nombreCliente + this.state.apellidoCliente
         })
-        console.log();
-        console.log(this.state.nombreCompleto);
-        console.log();
     }
 
     clickMujerCheck = () => {
-        if (mujerFlag) {
+        if (this.state.mujerFlag) {
             this.setState({
                 mujerFlag: false,
                 generoCliente: ''
@@ -103,7 +116,7 @@ class RegisterPageClient extends Component {
     }
 
     clickHombreCheck = () => {
-        if (hombreFlag) {
+        if (this.state.hombreFlag) {
             this.setState({
                 hombreFlag: false,
                 generoCliente: ''
@@ -117,7 +130,7 @@ class RegisterPageClient extends Component {
     }
 
     clickIndefinidoCheck = () => {
-        if (indefinidoFlag) {
+        if (this.state.indefinidoFlag) {
             this.setState({
                 indefinidoFlag: false,
                 generoCliente: ''
@@ -132,45 +145,438 @@ class RegisterPageClient extends Component {
 
     clickUsername = (e) => {
         this.setState({
-            username = e.target.value
+            usernameCliente: e.target.value
         })
     }
 
     clickPassword = (e) => {
         this.setState({
-            password = e.target.value
+            passwordCliente: e.target.value
         })
     }
 
     clickDia = (e) => {
         this.setState({
-            diaS = e.target.value
+            diaS: e
         })
     }
 
     clickMes = (e) => {
         this.setState({
-            mesS = e.target.value
+            mesS: e
         })
     }
 
     clickAño = (e) => {
         this.setState({
-            añoS = e.target.value
+            añoS: e.target.value
         })
     }
 
     ActualizarFechaCumpleaños = () => {
         this.setState({
-            fechaNacimiento = this.state.añoS + this.state.mesS + this.state.diaS
+            fechaNacimiento: this.state.añoS + this.state.mesS + this.state.diaS
         })
+    }
+
+    llamadaApi = () => {
         console.log();
-        console.log(this.state.fechaNacimiento);
+        console.log("Entra a llamadaApi");
         console.log();
     }
 
-    clickRegistrarCliente = () => {
+    createJsonFile = () => {
+        this.state.jsonFile.name = this.state.nombreCompleto;
+        this.state.jsonFile.username = this.state.usernameCliente;
+        this.state.jsonFile.password = this.state.passwordCliente;
+        this.state.jsonFile.birthday = this.state.fechaNacimiento;
+        this.state.jsonFile.gender = this.state.generoCliente;
 
+        console.log(this.state.jsonFile);
+    }
+
+    ActualizarCumpleYNombre = () => {
+        this.ActualizarFechaCumpleaños();
+        this.ActualizarNombreCompleto();
+        if (this.state.entraP) {
+            this.createJsonFile();
+        } else {
+            this.setState({
+                entraP: true
+            })
+        }
+    }
+
+    clickRegistrarCliente = () => {
+        if (this.state.entraP) {
+            if (this.state.nombreCliente === '') {
+                Swal.fire(
+                    'Error',
+                    'Por favor escriba su nombre',
+                    'error'
+                );
+            } else {
+                if (this.state.apellidoCliente === '') {
+                    Swal.fire(
+                        'Error',
+                        'Por favor escriba sus apellidos',
+                        'error'
+                    );
+                } else {
+                    if (this.state.diaS === '') {
+                        Swal.fire(
+                            'Error',
+                            'Por favor seleccione el día en que nació',
+                            'error'
+                        );
+                    } else {
+                        if (this.state.mesS === '') {
+                            Swal.fire(
+                                'Error',
+                                'Por favor seleccione el mes en que nació',
+                                'error'
+                            );
+                        } else {
+                            if (this.state.añoS === '') {
+                                Swal.fire(
+                                    'Error',
+                                    'Por favor escriba el año en que nació',
+                                    'error'
+                                );
+                            } else {
+                                if (this.state.usernameCliente === '') {
+                                    Swal.fire(
+                                        'Error',
+                                        'Por favor escriba su nombre de usuario',
+                                        'error'
+                                    );
+                                } else {
+                                    if (this.state.passwordCliente === '') {
+                                        Swal.fire(
+                                            'Error',
+                                            'Por favor escriba su contraseña',
+                                            'error'
+                                        );
+                                    } else {
+                                        if (this.state.mujerFlag) {
+                                            if (this.state.hombreFlag) {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                }
+                                            } else {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }
+                                            }
+                                        } else {
+                                            if (this.state.hombreFlag) {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }
+                                            } else {
+                                                if (this.state.indefinidoFlag) {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }else{
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor elegir un género',
+                                                        'error'
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            if (this.state.nombreCliente === '') {
+                Swal.fire(
+                    'Error',
+                    'Por favor escriba su nombre',
+                    'error'
+                );
+            } else {
+                if (this.state.apellidoCliente === '') {
+                    Swal.fire(
+                        'Error',
+                        'Por favor escriba sus apellidos',
+                        'error'
+                    );
+                } else {
+                    if (this.state.diaS === '') {
+                        Swal.fire(
+                            'Error',
+                            'Por favor seleccione el día en que nació',
+                            'error'
+                        );
+                    } else {
+                        if (this.state.mesS === '') {
+                            Swal.fire(
+                                'Error',
+                                'Por favor seleccione el mes en que nació',
+                                'error'
+                            );
+                        } else {
+                            if (this.state.añoS === '') {
+                                Swal.fire(
+                                    'Error',
+                                    'Por favor escriba el año en que nació',
+                                    'error'
+                                );
+                            } else {
+                                if (this.state.usernameCliente === '') {
+                                    Swal.fire(
+                                        'Error',
+                                        'Por favor escriba su nombre de usuario',
+                                        'error'
+                                    );
+                                } else {
+                                    if (this.state.passwordCliente === '') {
+                                        Swal.fire(
+                                            'Error',
+                                            'Por favor escriba su contraseña',
+                                            'error'
+                                        );
+                                    } else {
+                                        if (this.state.mujerFlag) {
+                                            if (this.state.hombreFlag) {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                }
+                                            } else {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }
+                                            }
+                                        } else {
+                                            if (this.state.hombreFlag) {
+                                                if (this.state.indefinidoFlag) {
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor solo elegir un género',
+                                                        'error'
+                                                    );
+                                                } else {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }
+                                            } else {
+                                                if (this.state.indefinidoFlag) {
+                                                    this.ActualizarCumpleYNombre();
+                                                    const swalWithBootstrapButtons = Swal.mixin({
+                                                        customClass: {
+                                                            confirmButton: 'btn btn-success',
+                                                            cancelButton: 'btn btn-danger'
+                                                        },
+                                                        buttonsStyling: false
+                                                    })
+
+                                                    swalWithBootstrapButtons.fire({
+                                                        title: 'Confirmar registro',
+                                                        text: "Desea registrar esta promoción?",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Si, deseo registrar',
+                                                        cancelButtonText: 'No',
+                                                        reverseButtons: true
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            this.ActualizarCumpleYNombre();
+                                                            this.llamadaApi();
+                                                        } else if (
+                                                            /* Read more about handling dismissals below */
+                                                            result.dismiss === Swal.DismissReason.cancel
+                                                        ) {
+                                                        }
+                                                    })
+                                                }else{
+                                                    Swal.fire(
+                                                        'Error',
+                                                        'Por favor elegir un género',
+                                                        'error'
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     render() {
@@ -206,12 +612,14 @@ class RegisterPageClient extends Component {
                                                         <Input
                                                             placeholder="Nombre"
                                                             type="text"
+                                                            onSelect={this.clickName}
                                                         />
                                                     </Col>
                                                     <Col>
                                                         <Input
                                                             placeholder="Apellidos"
                                                             type="text"
+                                                            onSelect={this.clickApellidos}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -241,21 +649,36 @@ class RegisterPageClient extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Input
-                                                                    placeholder="Día"
-                                                                    type="text"
-                                                                />
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Día"}
+                                                                    className='scrollDelDrop'
+                                                                    onSelect={this.clickDia}
+                                                                >
+                                                                    {this.state.listaDia.map((dia) => (
+                                                                        <Dropdown.Item eventKey={dia}>{dia}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                                <p>{this.state.diaS}</p>
                                                             </Col>
                                                             <Col>
-                                                                <Input
-                                                                    placeholder="Mes"
-                                                                    type="text"
-                                                                />
+                                                                <DropdownButton
+                                                                    as={ButtonGroup}
+                                                                    title={"Mes"}
+                                                                    className='scrollDelDrop'
+                                                                    onSelect={this.clickMes}
+                                                                >
+                                                                    {this.state.listaMes.map((mes) => (
+                                                                        <Dropdown.Item eventKey={mes}>{mes}</Dropdown.Item>
+                                                                    ))}
+                                                                </DropdownButton>
+                                                                <p>{this.state.mesS}</p>
                                                             </Col>
                                                             <Col>
                                                                 <Input
                                                                     placeholder="Año"
                                                                     type="text"
+                                                                    onSelect={this.clickAño}
                                                                 />
                                                             </Col>
                                                         </Row>
@@ -268,13 +691,13 @@ class RegisterPageClient extends Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <Form.Check type="checkbox" label="Mujer" />
+                                                                <Form.Check type="checkbox" label="Mujer" onClick={this.clickMujerCheck} />
                                                             </Col>
                                                             <Col>
-                                                                <Form.Check type="checkbox" label="Hombre" />
+                                                                <Form.Check type="checkbox" label="Hombre" onClick={this.clickHombreCheck} />
                                                             </Col>
                                                             <Col>
-                                                                <Form.Check type="checkbox" label="Indefinido" />
+                                                                <Form.Check type="checkbox" label="Indefinido" onClick={this.clickIndefinidoCheck} />
                                                             </Col>
                                                         </Row>
                                                     </Col>
@@ -294,6 +717,7 @@ class RegisterPageClient extends Component {
                                                         <Input
                                                             placeholder="Username"
                                                             type="text"
+                                                            onSelect={this.clickUsername}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -309,6 +733,7 @@ class RegisterPageClient extends Component {
                                                         <Input
                                                             placeholder="Contraseña"
                                                             type="text"
+                                                            onSelect={this.clickPassword}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -317,7 +742,7 @@ class RegisterPageClient extends Component {
                                         <br />
                                         <Row>
                                             <Col>
-                                                <Button variant="dark" size="lg" >Registrarme</Button>
+                                                <Button variant="dark" size="lg" onClick={this.clickRegistrarCliente}>Registrarme</Button>
                                             </Col>
                                         </Row>
                                     </Form>

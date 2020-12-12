@@ -36,7 +36,6 @@ class HistorialCliente extends Component {
     }
 
     clickRealizarBusqueda = () => {
-        console.log('entra');
         if (this.state.usernameFlag) {
             this.state.data.query = "USERNAME";
             this.state.data.name = this.state.clientName;

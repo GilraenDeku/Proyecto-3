@@ -12,6 +12,7 @@ import RegistarRegalia from './RegistrarRegalia';
 import TestImage from './TestImage';
 import TestRegistroArticulo from './TestRegistroArticulo';
 import RegisterPageClient from './RegisterPageClient';
+import HistorialPageCliente from './HistorialPageCliente';
 
 import {
   BrowserRouter as Router,
@@ -56,9 +57,13 @@ function App() {
         <Route path="/TestImage">
           <TestImage />
         </Route>
+        <Route path="/HistorialPageCliente">
+          <HistorialPageCliente />
+        </Route>
         <Route path="/">
           <PantallaPrincipal />
         </Route>
+        
       </Switch>
     </Router>
   );
