@@ -52,7 +52,6 @@ class HistorialPageCliente extends Component {
     }
 
     testDatos = (e) => {
-        console.log("entra");
         this.setState({
             historial: e
         })
@@ -128,8 +127,7 @@ class HistorialPageCliente extends Component {
 
         const userInfo = JSON.parse(localStorage.getItem('user_info'))
 
-        console.log('Me lo manda de la página principal');
-        console.log(userInfo);
+        this.state.data.name = userInfo.client;
 
 
         const columnsHistorial = [

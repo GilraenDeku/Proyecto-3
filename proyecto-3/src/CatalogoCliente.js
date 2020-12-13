@@ -19,6 +19,7 @@ import Form from 'react-bootstrap/Form'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationfactory from 'react-bootstrap-table2-paginator';
 import Modal from 'react-bootstrap/Modal';
+import { Redirect } from 'react-router-dom';
 
 class CatalogoCliente extends Component {
 
@@ -32,7 +33,8 @@ class CatalogoCliente extends Component {
             modalShow: false,
             closeModal: false,
             idCarrito: 0,
-            unidadesCarrito: 0
+            unidadesCarrito: 0,
+            comprasFlag: false
         }
 
     }
@@ -52,10 +54,19 @@ class CatalogoCliente extends Component {
     }
 
     ActualizarCarritoItems = (idDelCarrito) => {
-        this.setState({
-            carritoItems: this.state.carritoItems + 1
-        })
-        this.ActualizarCarrito(idDelCarrito);
+        if (this.state.unidadesCarrito === 0) {
+            Swal.fire(
+                'Error',
+                'Por favor indique las unidades que quiere comprar del artículo',
+                'error'
+            );
+        } else {
+            this.setState({
+                carritoItems: this.state.carritoItems + 1
+            })
+            this.ActualizarCarrito(idDelCarrito);
+        }
+
     }
 
     ActualizarCarrito = (idDelCarrito) => {
@@ -63,6 +74,11 @@ class CatalogoCliente extends Component {
             'name': this.state.tableData[idDelCarrito].name,
             'amount': this.state.unidadesCarrito
         });
+        Swal.fire(
+            'Artículo añadido',
+            'El artículo ' + this.state.tableData[idDelCarrito].name + ' se a añadido a su carrito',
+            'success'
+        );
     }
 
     VerCarrito = (e) => {
@@ -83,19 +99,33 @@ class CatalogoCliente extends Component {
         })
     }
 
+    realizarCompra = () => {
+        this.setState({
+            comprasFlag: true
+        })
+    }
+
+    renderRedirect = () => {
+        if (this.state.comprasFlag) {
+            return <Redirect to='/ComprasPage' />
+        }
+    }
+
     render() {
         const userInfo = JSON.parse(localStorage.getItem('user_info'));
         var test = '';
+
+        userInfo.products = this.state.carrito;
 
         console.log('Me lo manda de la página principal');
         console.log(userInfo);
         const columns = [
             { dataField: 'name', text: 'Nombre del Producto' },
-            { dataField: 'unidad', text: 'Unidades del Producto' }
+            { dataField: 'amount', text: 'Unidades del Producto' }
         ];
         return (
             <div className='CatalogoCliente'>
-
+                {this.renderRedirect()}
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className='m-auto'>
 
                     <Navbar.Brand className="m-auto">Bienvenid@</Navbar.Brand>
@@ -212,14 +242,15 @@ class CatalogoCliente extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <h4>Mis artículos en el carrito</h4>
-                            <p>
-                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                                consectetur ac, vestibulum at eros.
-              </p>
+                            <br />
+                            <BootstrapTable
+                                keyField="name"
+                                data={this.state.carrito}
+                                columns={columns} />
+                            <br />
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={this.modalCLose}>Realizar compra</Button>
+                            <Button onClick={this.realizarCompra}>Realizar compra</Button>
                             <Button onClick={this.modalCLose}>Close</Button>
                         </Modal.Footer>
                     </Modal>
