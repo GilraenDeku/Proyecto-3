@@ -125,7 +125,13 @@ class HistorialPageCliente extends Component {
     }
 
     render() {
-        localStorage.clear();
+
+        const userInfo = JSON.parse(localStorage.getItem('user_info'))
+
+        console.log('Me lo manda de la página principal');
+        console.log(userInfo);
+
+
         const columnsHistorial = [
             { dataField: 'id', text: 'ID de la compra' },
             { dataField: 'dia', text: 'Fecha de la Compra' },
@@ -144,8 +150,8 @@ class HistorialPageCliente extends Component {
                     <Navbar.Collapse id="responsive-navbar-nav">
 
                         <Nav className="m-auto">
-                            <Nav.Link >Mi Historial</Nav.Link>
-                            <Nav.Link >Catálogo</Nav.Link>
+                            <Nav.Link href="./HistorialPageCliente">Mi Historial</Nav.Link>
+                            <Nav.Link href="./CatalogoCliente">Catálogo</Nav.Link>
                             <Nav.Link href="./">Salir</Nav.Link>
                         </Nav>
 

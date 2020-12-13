@@ -71,6 +71,43 @@ class RegisterPageClient extends Component {
 
     }
 
+    registrarClienteNuevo = async () => {
+
+        const url = `http://localhost:5000/register_client`;
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(this.state.jsonFile)
+        };
+
+
+
+        const response = await fetch(url, requestOptions);
+        if(response.status === 409){
+            Swal.fire(
+                'Error',
+                'El Cliente ya existe por favor ingrese un nuevo cliente',
+                'error'
+            );
+        }else{
+            if(response.status === 404){
+                Swal.fire(
+                    'Error',
+                    'Hubo un error al ingresar un cliente nuevo, por favor intente más tarde',
+                    'error'
+                );
+            }else{
+                Swal.fire(
+                    'Registro Exitoso',
+                    'El registro se ha realizado de manera exitosa',
+                    'success'
+                );
+            }
+        }
+
+    }
+
     renderRedirect = () => {
         if (this.state.selectFlag) {
             return <Redirect to='/' />
@@ -162,9 +199,88 @@ class RegisterPageClient extends Component {
     }
 
     clickMes = (e) => {
-        this.setState({
-            mesS: e
-        })
+        var temp = '01';
+        if(e === "Enero"){
+            temp = '01';
+            this.setState({
+                mesS: temp
+            })
+        }else{
+            if(e === "Febrero"){
+                temp = '02';
+                this.setState({
+                    mesS: temp
+                })
+            }else{
+                if(e === "Marzo"){
+                    temp = '03';
+                    this.setState({
+                        mesS: temp
+                    })
+                }else{
+                    if(e === "Abril"){
+                        temp = '04';
+                        this.setState({
+                            mesS: temp
+                        })
+                    }else{
+                        if(e === "Mayo"){
+                            temp = '05';
+                            this.setState({
+                                mesS: temp
+                            })
+                        }else{
+                            if(e === "Junio"){
+                                temp = '06';
+                                this.setState({
+                                    mesS: temp
+                                })
+                            }else{
+                                if(e === "Julio"){
+                                    temp = '07';
+                                    this.setState({
+                                        mesS: temp
+                                    })
+                                }else{
+                                    if(e === "Agosto"){
+                                        temp = '08';
+                                        this.setState({
+                                            mesS: temp
+                                        })
+                                    }else{
+                                        if(e === "Septiembre"){
+                                            temp = '09';
+                                            this.setState({
+                                                mesS: temp
+                                            })
+                                        }else{
+                                            if(e === "Octubre"){
+                                                temp = '10';
+                                                this.setState({
+                                                    mesS: temp
+                                                })
+                                            }else{
+                                                if(e === "Noviembre"){
+                                                    temp = '11';
+                                                    this.setState({
+                                                        mesS: temp
+                                                    })
+                                                }else{
+                                                    temp = '12';
+                                                    this.setState({
+                                                        mesS: temp
+                                                    })                                                    
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     clickAño = (e) => {
@@ -183,6 +299,8 @@ class RegisterPageClient extends Component {
         console.log();
         console.log("Entra a llamadaApi");
         console.log();
+        console.log(this.state.jsonFile);
+        this.registrarClienteNuevo();
     }
 
     createJsonFile = () => {
@@ -191,8 +309,6 @@ class RegisterPageClient extends Component {
         this.state.jsonFile.password = this.state.passwordCliente;
         this.state.jsonFile.birthday = this.state.fechaNacimiento;
         this.state.jsonFile.gender = this.state.generoCliente;
-
-        console.log(this.state.jsonFile);
     }
 
     ActualizarCumpleYNombre = () => {

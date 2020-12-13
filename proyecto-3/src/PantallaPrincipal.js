@@ -12,7 +12,13 @@ class PantallaPrincipal extends Component {
         super(props)
         this.state = {
             selectFlag: false,
-            registerFlag: false
+            registerFlag: false,
+            selectCliente: false,
+            jsonLocalStorage: {
+              client: 'Joseda8',
+              date: '',
+              products: null
+            }
         }
 
     }
@@ -23,6 +29,10 @@ class PantallaPrincipal extends Component {
         }else{
             if(this.state.registerFlag){
                 return <Redirect to='/RegisterPageClient' />
+            }else{
+                if(this.state.selectCliente) {
+                    return <Redirect to='/CatalogoCliente' />
+                }
             }
         }
     }
@@ -37,10 +47,24 @@ class PantallaPrincipal extends Component {
     	this.setState({
             registerFlag: true
         })
+    }
+    
+    clickPresionadoCliente = (event) =>{
+    	this.setState({
+            selectCliente: true
+        })
 	}
 
     render() {
+
         localStorage.clear();
+
+    if (!localStorage.getItem('user_info')) {
+      localStorage.setItem('user_info', '');
+    }
+
+
+    localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
 
         return (
             <div className='RegistrarArticulo'>
@@ -49,7 +73,8 @@ class PantallaPrincipal extends Component {
                     <Row>
                         <Col>
                             <h1>Esta es la Pantalla Principal</h1>
-                            <Button variant="dark" size="lg" onClick={this.clickPresionado}>Entrar</Button>
+                            <Button variant="dark" size="lg" onClick={this.clickPresionado}>Entrar Administrador</Button>
+                            <Button variant="dark" size="lg" onClick={this.clickPresionadoCliente}>Entrar Cliente</Button>
                             <Button variant="dark" size="lg" onClick={this.clickPresionadoRegister}>Registrar</Button>
                         </Col>
                     </Row>

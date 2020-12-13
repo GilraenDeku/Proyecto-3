@@ -13,6 +13,7 @@ import TestImage from './TestImage';
 import TestRegistroArticulo from './TestRegistroArticulo';
 import RegisterPageClient from './RegisterPageClient';
 import HistorialPageCliente from './HistorialPageCliente';
+import CatalogoCliente from './CatalogoCliente';
 
 import {
   BrowserRouter as Router,
@@ -59,6 +60,9 @@ function App() {
         </Route>
         <Route path="/HistorialPageCliente">
           <HistorialPageCliente />
+        </Route>
+        <Route path="/CatalogoCliente">
+          <CatalogoCliente />
         </Route>
         <Route path="/">
           <PantallaPrincipal />

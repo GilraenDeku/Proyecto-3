@@ -10,6 +10,8 @@ REGISTRO DE UN CLIENTE
 
 http://localhost:5000/register_client
 
+PUT
+
 {"username": "Joseda8", "password": "test", "name": "Jose Montoya Salazar", "birthday": "19980815", "gender": "M"}
 
 
