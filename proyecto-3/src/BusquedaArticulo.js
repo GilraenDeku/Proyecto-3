@@ -42,6 +42,7 @@ class BusquedaArticulo extends Component {
 
     llamadaALaBase = async () => {
         const response = await fetch(`http://localhost:5000/find_product?product_name=${this.state.nameSelect}`);
+        
         if (response.status === 404) {
             Swal.fire(
                 'Error',

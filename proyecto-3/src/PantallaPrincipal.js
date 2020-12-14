@@ -14,6 +14,8 @@ import {
 } from "reactstrap";
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
+import logo from './esports_logo.png';
+
 
 class PantallaPrincipal extends Component {
 
@@ -33,7 +35,8 @@ class PantallaPrincipal extends Component {
             jsonLogIn: {
                 username: '',
                 password: ''
-            }
+            },
+            profileImg: logo,
         }
 
     }
@@ -133,6 +136,7 @@ class PantallaPrincipal extends Component {
                     this.state.jsonLocalStorage.client = this.state.username;
                     this.state.jsonLogIn.username = this.state.username;
                     this.state.jsonLogIn.password = this.state.contraseña;
+
                     this.llamadaALaBase();
                 }
             }
@@ -154,23 +158,13 @@ class PantallaPrincipal extends Component {
             <div className='RegistrarArticulo'>
                 {this.renderRedirect()}
                 <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
                 <Container>
                     <Row>
                         <Col>
                             <br />
-                            <h1>Proyecto #3</h1>
+                            <img src={this.state.profileImg} alt="Imagen de Perfil" className="testImage"></img>
                         </Col>
                     </Row>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
                     <br />
                     <br />
                     <br />

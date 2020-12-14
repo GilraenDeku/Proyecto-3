@@ -165,6 +165,8 @@ class ComprasPage extends Component {
         this.state.jsonRespuesta.date = this.state.fechaCompleta;
         this.state.jsonRespuesta.products = this.state.tableData;
 
+
+
         console.log();
         console.log("Este es el Json de la respuesta");
         console.log(this.state.jsonRespuesta);
@@ -301,7 +303,8 @@ class ComprasPage extends Component {
 
         const columns = [
             { dataField: 'name', text: 'Nombre del Producto' },
-            { dataField: 'amount', text: 'Unidades del Producto' }
+            { dataField: 'amount', text: 'Unidades del Producto' },
+            { dataField: 'price', text: 'Precio del Producto' }
         ];
         return (
             <div className='ComprasPage'>

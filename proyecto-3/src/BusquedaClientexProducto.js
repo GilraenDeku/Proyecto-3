@@ -144,13 +144,13 @@ class BusquedaClientexProducto extends Component {
                                     <Form>
                                         <Row>
                                             <Col>
-                                                <label className="labelSetting">Escribir el nombre del Cliente</label>
+                                                <label className="labelSetting">Escribir el nombre de usuario del Cliente</label>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col>
                                                 <Input
-                                                    placeholder="Nombre"
+                                                    placeholder="Username"
                                                     type="text"
                                                     className="inputName"
                                                     onChange={this.clickName}

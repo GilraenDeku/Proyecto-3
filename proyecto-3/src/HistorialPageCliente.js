@@ -35,6 +35,10 @@ class HistorialPageCliente extends Component {
 
     componentDidMount = async () => {
 
+        const userInfo = JSON.parse(localStorage.getItem('user_info'))
+
+        this.state.data.name = userInfo.client;
+
         const url = `http://localhost:5000/client_history`;
 
         const requestOptions = {
@@ -124,11 +128,6 @@ class HistorialPageCliente extends Component {
     }
 
     render() {
-
-        const userInfo = JSON.parse(localStorage.getItem('user_info'))
-
-        this.state.data.name = userInfo.client;
-
 
         const columnsHistorial = [
             { dataField: 'id', text: 'ID de la compra' },

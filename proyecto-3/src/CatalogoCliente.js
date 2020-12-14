@@ -36,9 +36,10 @@ class CatalogoCliente extends Component {
             unidadesCarrito: 0,
             comprasFlag: false,
             jsonLocalStorage: {
-                client: 'Joseda8',
+                client: '',
                 products: null
-              }
+            },
+            nombreCliente: ''
         }
 
     }
@@ -49,11 +50,15 @@ class CatalogoCliente extends Component {
         fetch(`http://localhost:5000/get_collection?collection=product`)
             .then(response => response.json())
             .then(response => this.listData(response))
+
+            
     }
 
     listData = (e) => {
+        const userInfo = JSON.parse(localStorage.getItem('user_info'));
         this.setState({
-            tableData: e
+            tableData: e,
+            nombreCliente: userInfo.client
         })
     }
 
@@ -76,14 +81,17 @@ class CatalogoCliente extends Component {
     ActualizarCarrito = (idDelCarrito) => {
         this.state.carrito.push({
             'name': this.state.tableData[idDelCarrito].name,
-            'amount': this.state.unidadesCarrito
+            'amount': this.state.unidadesCarrito,
+            'price': this.state.tableData[idDelCarrito].price
         });
         this.state.jsonLocalStorage.products = this.state.carrito;
+        this.state.jsonLocalStorage.client = this.state.nombreCliente;
         Swal.fire(
             'Artículo añadido',
             'El artículo ' + this.state.tableData[idDelCarrito].name + ' se a añadido a su carrito',
             'success'
         );
+        localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
     }
 
     VerCarrito = (e) => {
@@ -119,13 +127,13 @@ class CatalogoCliente extends Component {
     render() {
         const userInfo = JSON.parse(localStorage.getItem('user_info'));
         var test = '';
-        localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
 
         console.log('Me lo manda de la página principal');
         console.log(userInfo);
         const columns = [
             { dataField: 'name', text: 'Nombre del Producto' },
-            { dataField: 'amount', text: 'Unidades del Producto' }
+            { dataField: 'amount', text: 'Unidades del Producto' },
+            { dataField: 'price', text: 'Precio del Producto' }
         ];
         return (
             <div className='CatalogoCliente'>
