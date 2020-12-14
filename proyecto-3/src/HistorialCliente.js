@@ -15,7 +15,7 @@ import {
     CardTitle,
     Input,
 } from "reactstrap";
-import Form from 'react-bootstrap/Form'
+import Form from 'react-bootstrap/Form';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationfactory from 'react-bootstrap-table2-paginator';
 

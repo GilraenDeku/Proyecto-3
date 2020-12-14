@@ -31,6 +31,7 @@ class ComprasPage extends Component {
             nombreCliente: '',
             selectDia: '',
             selectMes: '',
+            mesJson: '',
             selectAño: '',
             fechaCompleta: '',
             listaDia: [
@@ -45,14 +46,26 @@ class ComprasPage extends Component {
                 "Octubre", "Noviembre", "Diciembre"
             ],
 
-            devolvermeFlag: false
+            devolvermeFlag: false,
+
+            jsonRespuesta: {
+                'client': '',
+                'date': '',
+                'products': null
+            }
         }
 
+    }
+
+    componentDidMount = async (e) => {
+        this.ActualizartableData();
     }
 
     /*
 
     Función que realiza la compra
+
+    */
 
     registrarCompraNueva = async () => {
 
@@ -61,7 +74,7 @@ class ComprasPage extends Component {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(this.state.jsonFile)
+            body: JSON.stringify(this.state.jsonRespuesta)
         };
 
 
@@ -90,7 +103,74 @@ class ComprasPage extends Component {
         }
 
     }
-    */
+
+    verificacionCompra = () => {
+        this.creacionJsonRespuesta();
+        if(this.state.selectDia === ''){
+            Swal.fire(
+                'Error',
+                'Por favor indique el día de la compra',
+                'error'
+            );
+        }else{
+            if(this.state.selectMes === ''){
+                Swal.fire(
+                    'Error',
+                    'Por favor indique el mes de la compra',
+                    'error'
+                );
+            }else{
+                if(this.state.selectAño === ''){
+                    Swal.fire(
+                        'Error',
+                        'Por favor indique el año de la compra',
+                        'error'
+                    );
+                }else{
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: false
+                    })
+            
+                    swalWithBootstrapButtons.fire({
+                        title: 'Confirmar registro',
+                        text: "Desea registrar esta promoción?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Si, deseo registrar',
+                        cancelButtonText: 'No',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.creacionJsonRespuesta();
+                            this.registrarCompraNueva();
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    creacionJsonRespuesta = () => {
+        this.ActualizarFechaCompleta();
+        const userInfo = JSON.parse(localStorage.getItem('user_info'));
+        this.state.jsonRespuesta.client = userInfo.client;
+        this.state.jsonRespuesta.date = this.state.fechaCompleta;
+        this.state.jsonRespuesta.products = this.state.tableData;
+
+        console.log();
+        console.log("Este es el Json de la respuesta");
+        console.log(this.state.jsonRespuesta);
+        console.log();
+
+    }
 
     listData = (e) => {
         this.setState({
@@ -108,6 +188,75 @@ class ComprasPage extends Component {
         this.setState({
             selectMes: e
         })
+        if (this.state.selectMes === 'Enero') {
+            this.setState({
+                mesJson: '01'
+            })
+        } else {
+            if (this.state.selectMes === 'Febrero') {
+                this.setState({
+                    mesJson: '02'
+                })
+            } else {
+                if (this.state.selectMes === 'Marzo') {
+                    this.setState({
+                        mesJson: '03'
+                    })
+                } else {
+                    if (this.state.selectMes === 'Abril') {
+                        this.setState({
+                            mesJson: '04'
+                        })
+                    } else {
+                        if (this.state.selectMes === 'Mayo') {
+                            this.setState({
+                                mesJson: '05'
+                            })
+                        } else {
+                            if (this.state.selectMes === 'Junio') {
+                                this.setState({
+                                    mesJson: '06'
+                                })
+                            } else {
+                                if (this.state.selectMes === 'Julio') {
+                                    this.setState({
+                                        mesJson: '07'
+                                    })
+                                } else {
+                                    if (this.state.selectMes === 'Agosto') {
+                                        this.setState({
+                                            mesJson: '08'
+                                        })
+                                    } else {
+                                        if (this.state.selectMes === 'Septiembre') {
+                                            this.setState({
+                                                mesJson: '09'
+                                            })
+                                        } else {
+                                            if (this.state.selectMes === 'Octubre') {
+                                                this.setState({
+                                                    mesJson: '10'
+                                                })
+                                            } else {
+                                                if (this.state.selectMes === 'Noviembre') {
+                                                    this.setState({
+                                                        mesJson: '11'
+                                                    })
+                                                } else {
+                                                    this.setState({
+                                                        mesJson: '12'
+                                                    })
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     clickAño = (e) => {
@@ -118,8 +267,18 @@ class ComprasPage extends Component {
 
     ActualizarFechaCompleta = () => {
         this.setState({
-            fechaCompleta: this.state.selectAño + this.state.selectMes + this.state.selectDia
+            fechaCompleta: this.state.selectAño + this.state.mesJson + this.state.selectDia
         })
+    }
+
+    ActualizartableData = () => {
+        const userInfo = JSON.parse(localStorage.getItem('user_info'));
+        this.setState({
+            tableData: userInfo.products
+        })
+        console.log();
+        console.log(userInfo.products);
+        console.log();
     }
 
     clickAtras = () => {
@@ -137,8 +296,8 @@ class ComprasPage extends Component {
     render() {
         const userInfo = JSON.parse(localStorage.getItem('user_info'));
 
-        this.state.tableData = userInfo.products;
-
+        console.log('Me lo manda de la página principal');
+        console.log(userInfo);
 
         const columns = [
             { dataField: 'name', text: 'Nombre del Producto' },
@@ -146,7 +305,7 @@ class ComprasPage extends Component {
         ];
         return (
             <div className='ComprasPage'>
-
+                {this.renderRedirect()}
                 <Jumbotron className="jumbotronSetting">
                     <h1>Realizar la compra</h1>
                 </Jumbotron>
@@ -197,7 +356,7 @@ class ComprasPage extends Component {
                                                     className='scrollDelDrop'
                                                     onSelect={this.clickMes}
                                                 >
-                                                    {this.state.listaDia.map((Mes) => (
+                                                    {this.state.listaMes.map((Mes) => (
                                                         <Dropdown.Item eventKey={Mes}>{Mes}</Dropdown.Item>
                                                     ))}
                                                 </DropdownButton>
@@ -207,10 +366,10 @@ class ComprasPage extends Component {
                                                 <Input placeholder="Año" type="number" onChange={this.clickAño} />
                                             </Col>
                                         </Row>
-                                        <br/>
+                                        <br />
                                         <Row>
                                             <Col>
-                                            <label className="labelSetting">Mi carrito de compras</label>
+                                                <label className="labelSetting">Mi carrito de compras</label>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -222,17 +381,18 @@ class ComprasPage extends Component {
                                                     pagination={paginationfactory()} />
                                             </Col>
                                         </Row>
-                                        <br/>
+                                        <br />
                                         <Row>
                                             <Col>
-                                            <Button
+                                                <Button
                                                     variant="dark" size="lg"
+                                                    onClick={this.verificacionCompra}
                                                 >
                                                     Realizar la compra
                                                         </Button>
                                             </Col>
                                             <Col>
-                                            <Button
+                                                <Button
                                                     variant="dark" size="lg"
                                                     onClick={this.clickAtras}
                                                 >

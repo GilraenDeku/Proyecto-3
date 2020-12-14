@@ -34,7 +34,11 @@ class CatalogoCliente extends Component {
             closeModal: false,
             idCarrito: 0,
             unidadesCarrito: 0,
-            comprasFlag: false
+            comprasFlag: false,
+            jsonLocalStorage: {
+                client: 'Joseda8',
+                products: null
+              }
         }
 
     }
@@ -74,6 +78,7 @@ class CatalogoCliente extends Component {
             'name': this.state.tableData[idDelCarrito].name,
             'amount': this.state.unidadesCarrito
         });
+        this.state.jsonLocalStorage.products = this.state.carrito;
         Swal.fire(
             'Artículo añadido',
             'El artículo ' + this.state.tableData[idDelCarrito].name + ' se a añadido a su carrito',
@@ -114,8 +119,7 @@ class CatalogoCliente extends Component {
     render() {
         const userInfo = JSON.parse(localStorage.getItem('user_info'));
         var test = '';
-
-        userInfo.products = this.state.carrito;
+        localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
 
         console.log('Me lo manda de la página principal');
         console.log(userInfo);
