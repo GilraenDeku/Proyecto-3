@@ -52,11 +52,8 @@ class BusquedaArticulo extends Component {
         } else {
             const dataImprimir = await response.json();
             this.listData(dataImprimir);
-            Swal.fire(
-                'Registro Exitoso',
-                'El registro se realizó de manera exitosa',
-                'success'
-            );
+            console.log('Respuesta de la base')
+            console.log(dataImprimir)
         }
     }
 
@@ -133,15 +130,17 @@ class BusquedaArticulo extends Component {
                     if (this.state.dataList[i].offer === undefined) {
 
                     } else {
+                        let offerIndex = 0;
                         for (let o = 0; o < this.state.dataList[i].offer.length; o++) {
                             tempOffer.push({
-                                'name': this.state.dataList[i].offer[0].name,
-                                'description': this.state.dataList[i].offer[0].description,
-                                'type': this.state.dataList[i].offer[0].info.type,
-                                'condition': this.state.dataList[i].offer[0].info.condition,
-                                'start': this.state.dataList[i].offer[0].start,
-                                'end': this.state.dataList[i].offer[0].end
+                                'name': this.state.dataList[i].offer[offerIndex].name,
+                                'description': this.state.dataList[i].offer[offerIndex].description,
+                                'type': this.state.dataList[i].offer[offerIndex].info.type,
+                                'condition': this.state.dataList[i].offer[offerIndex].info.condition,
+                                'start': this.state.dataList[i].offer[offerIndex].start,
+                                'end': this.state.dataList[i].offer[offerIndex].end
                             })
+                            offerIndex = offerIndex + 1
                         }
 
                         this.actualizarTableOffer(tempOffer);
@@ -151,6 +150,8 @@ class BusquedaArticulo extends Component {
                 }
             }
         }
+        console.log('Estado de tabla')
+        console.log(this.state.dataList)
     }
 
     actualizarTableSports(e) {
@@ -163,6 +164,8 @@ class BusquedaArticulo extends Component {
         this.setState({
             offerProductos: e
         })
+        console.log('Ofertas')
+        console.log(e)
     }
 
     actualizarFoto(e) {

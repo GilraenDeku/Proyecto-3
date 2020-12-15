@@ -94,11 +94,13 @@ class ComprasPage extends Component {
                     'error'
                 );
             }else{
+                window.localStorage.removeItem('cart')
                 Swal.fire(
                     'Compra Exitosa',
                     'La compra se ha realizado de manera exitosa',
                     'success'
                 );
+
             }
         }
 

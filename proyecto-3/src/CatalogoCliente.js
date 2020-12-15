@@ -24,7 +24,6 @@ import { Redirect } from 'react-router-dom';
 class CatalogoCliente extends Component {
 
     constructor(props) {
-        console.log("entra a CatalogoCliente");
         super(props)
         this.state = {
             tableData: [],
@@ -47,6 +46,10 @@ class CatalogoCliente extends Component {
 
 
     componentDidMount = async (e) => {
+        this.setState({
+            carrito: JSON.parse(window.localStorage.getItem('cart')),
+            carritoItems: JSON.parse(window.localStorage.getItem('cart')).length
+        })
         fetch(`http://localhost:5000/get_collection?collection=product`)
             .then(response => response.json())
             .then(response => this.listData(response))
@@ -92,6 +95,7 @@ class CatalogoCliente extends Component {
             'success'
         );
         localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
+        localStorage.setItem('cart', JSON.stringify(this.state.carrito));
     }
 
     VerCarrito = (e) => {
@@ -128,13 +132,16 @@ class CatalogoCliente extends Component {
         const userInfo = JSON.parse(localStorage.getItem('user_info'));
         var test = '';
 
-        console.log('Me lo manda de la página principal');
-        console.log(userInfo);
         const columns = [
             { dataField: 'name', text: 'Nombre del Producto' },
             { dataField: 'amount', text: 'Unidades del Producto' },
             { dataField: 'price', text: 'Precio del Producto' }
         ];
+
+        if(window.localStorage.getItem('cart') ===null){
+            window.localStorage.setItem('cart', JSON.stringify([]))
+        }
+
         return (
             <div className='CatalogoCliente'>
                 {this.renderRedirect()}

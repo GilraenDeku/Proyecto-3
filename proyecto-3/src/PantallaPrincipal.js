@@ -145,7 +145,7 @@ class PantallaPrincipal extends Component {
  
     render() {
 
-        localStorage.clear();
+        localStorage.removeItem('user_info');
 
         if (!localStorage.getItem('user_info')) {
             localStorage.setItem('user_info', '');
