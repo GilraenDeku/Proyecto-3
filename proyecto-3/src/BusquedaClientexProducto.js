@@ -61,7 +61,7 @@ class BusquedaClientexProducto extends Component {
     renderListaFinal = () => {
         var temp = [];
         for (let w = 0; w < this.state.listaTabla.length; w++) {
-            for (let q = 0; q < this.state.listaTabla[0].products.length; q++) {
+            for (let q = 0; q < this.state.listaTabla[w].products.length; q++) {
                 temp.push({
                     'name': this.state.listaTabla[w].name,
                     'username': this.state.listaTabla[w].username,
@@ -69,6 +69,9 @@ class BusquedaClientexProducto extends Component {
                 })
             }
         }
+        console.log("\n Lo que se manda de la lista");
+        console.log(temp);
+        console.log();
         this.actualizarData(temp);
     }
 
