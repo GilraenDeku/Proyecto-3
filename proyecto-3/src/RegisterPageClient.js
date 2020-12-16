@@ -848,7 +848,7 @@ class RegisterPageClient extends Component {
                                                     <Col>
                                                         <Input
                                                             placeholder="Contraseña"
-                                                            type="text"
+                                                            type="password"
                                                             onSelect={this.clickPassword}
                                                         />
                                                     </Col>

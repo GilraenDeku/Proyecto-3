@@ -100,12 +100,12 @@ class BusquedaArticulo extends Component {
                     } else {
                         for (let o = 0; o < this.state.dataList[i].offer.length; o++) {
                             tempOffer.push({
-                                'name': this.state.dataList[i].offer[0].name,
-                                'description': this.state.dataList[i].offer[0].description,
-                                'type': this.state.dataList[i].offer[0].info.type,
-                                'condition': this.state.dataList[i].offer[0].info.condition,
-                                'start': this.state.dataList[i].offer[0].start,
-                                'end': this.state.dataList[i].offer[0].end
+                                'name': this.state.dataList[i].offer[o].name,
+                                'description': this.state.dataList[i].offer[o].description,
+                                'type': this.state.dataList[i].offer[o].info.type,
+                                'condition': this.state.dataList[i].offer[o].info.condition,
+                                'start': this.state.dataList[i].offer[o].start,
+                                'end': this.state.dataList[i].offer[o].end
                             })
                         }
 

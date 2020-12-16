@@ -94,6 +94,12 @@ class CatalogoCliente extends Component {
             'El artículo ' + this.state.tableData[idDelCarrito].name + ' se a añadido a su carrito',
             'success'
         );
+
+        console.log();
+        console.log("Esto es lo del local Storage");
+        console.log(this.state.jsonLocalStorage);
+        console.log();
+
         localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
         localStorage.setItem('cart', JSON.stringify(this.state.carrito));
     }
@@ -102,6 +108,23 @@ class CatalogoCliente extends Component {
         this.setState({
             modalShow: true
         })
+    }
+
+    VaciarCarrito = (e) => {
+        var test = [];
+        this.setState({
+            carrito: test,
+            carritoItems: 0
+        })
+        localStorage.setItem('user_info', JSON.stringify(this.state.jsonLocalStorage));
+        
+        localStorage.setItem('cart', JSON.stringify(this.state.carrito));
+
+        Swal.fire(
+            'Vacío exitoso',
+            'El carrito se ha vaciado de manera exitosa',
+            'success'
+        );
     }
 
     modalCLose = (e) => {
@@ -188,6 +211,14 @@ class CatalogoCliente extends Component {
                                                     onClick={this.VerCarrito}
                                                 >
                                                     Ver Carrito
+                                                        </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button
+                                                    variant="dark" size="lg"
+                                                    onClick={this.VaciarCarrito}
+                                                >
+                                                    Vaciar Carrito
                                                         </Button>
                                             </Col>
                                         </Row>

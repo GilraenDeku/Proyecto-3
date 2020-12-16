@@ -282,6 +282,7 @@ class RegistrarRegalia extends Component {
         this.state.jsonFile.end = this.state.fechaFinalJson;
 
         console.log();
+        console.log("Esto es lo que me manda");
         console.log(this.state.jsonFile);
         console.log();
         this.registrarArticuloNuevo();
