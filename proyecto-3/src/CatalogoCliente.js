@@ -228,6 +228,9 @@ class CatalogoCliente extends Component {
                                                 <p>Marca: {character.brand}</p>
                                                 <p>Precio: ₡{character.price}</p>
                                                 <p>Unidades disponibles: {character.units}</p>
+                                                <p>Ofertas: {character.offer!==undefined ? JSON.stringify(character.offer.map((offer, index) => {
+                                                    return JSON.stringify(offer.name) + ': ' + JSON.stringify(offer.description) + ' '
+                                                })).replaceAll("\"", "").replaceAll("\[", "").replaceAll("\]", "").replaceAll("\\", "") : 'None'}</p>
                                                 <br />
                                                 <p>Unidades a comprar</p>
                                                 <Input className="mb-2 mr-sm-2" placeholder="Unidades" type="number" onChange={this.ActualizarUnidadesCarrito} />
